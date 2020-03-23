@@ -4,8 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ResQuod.LoginPage">
-
+             x:Class="ResQuod.RegisterPage">
     <StackLayout>
         <StackLayout x:Name="TopLayout"  Spacing="0">
             <StackLayout Padding="0,30" BackgroundColor="Gray">
@@ -14,17 +13,20 @@
                 <Label Text="Check in in your events!" TextColor="#d0d0d0" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="-5" Padding="-5">
-                <Button BackgroundColor="Gray" IsEnabled="False" TextColor="White" Text="LOGIN" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0"></Button>
-                <Button BackgroundColor="Gray" TextColor="White" Text="SIGN UP" Clicked="OpenRegisterPage" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                <Button BackgroundColor="Gray" TextColor="White" Text="LOGIN" Clicked="OpenLoginPage" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                <Button BackgroundColor="Gray" IsEnabled="False" TextColor="White" Text="SIGN UP" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0"></Button>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="-5" Margin="0,4">
-                <BoxView HorizontalOptions="FillAndExpand" Color="Black" HeightRequest="6" Opacity="0.7"></BoxView>
                 <BoxView HorizontalOptions="FillAndExpand" HeightRequest="5" Opacity="0"></BoxView>
+                <BoxView HorizontalOptions="FillAndExpand" Color="Black" HeightRequest="6" Opacity="0.7"></BoxView>
             </StackLayout>
             <StackLayout Padding="40">
-                <Entry Keyboard="Email" Placeholder="Email" PlaceholderColor="Gray" x:Name="Email"/>
+                <Entry Placeholder="Name" PlaceholderColor="Gray"/>
+                <Entry Placeholder="Surname" PlaceholderColor="Gray"/>
+                <Entry Keyboard="Email" Placeholder="Email" PlaceholderColor="Gray"/>
                 <Entry Placeholder="Password" IsPassword="True" PlaceholderColor="Gray" x:Name="Password"/>
-                <Button Text="LOGIN" Padding="20"  Margin="30" BackgroundColor="#008B8B" TextColor="White" FontAttributes="Bold" FontSize="15"/>
+                <Entry Placeholder="Confirm Password" IsPassword="True" PlaceholderColor="Gray" x:Name="ConfirmPassword"/>
+                <Button Text="Register" Padding="20"  Margin="30" BackgroundColor="#008B8B" TextColor="White" FontAttributes="Bold" FontSize="15"/>
             </StackLayout>
         </StackLayout>
     </StackLayout>

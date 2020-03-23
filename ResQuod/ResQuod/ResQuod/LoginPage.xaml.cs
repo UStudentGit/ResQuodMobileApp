@@ -17,5 +17,10 @@ namespace ResQuod
         {
             InitializeComponent();
         }
+
+        private void OpenRegisterPage(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new RegisterPage();
+        }
     }
 }
