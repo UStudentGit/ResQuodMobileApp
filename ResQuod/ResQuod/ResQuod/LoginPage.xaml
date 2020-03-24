@@ -9,10 +9,8 @@
     <StackLayout>
         <StackLayout x:Name="TopLayout"  Spacing="0">
             <StackLayout Padding="0,30" BackgroundColor="Gray">
-                <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="100" HeightRequest="100" BackgroundColor="Black"/>
-                <Label Text="ResQuod" TextColor="White" FontSize="35" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                <Label Text="Check in in your events!" TextColor="#d0d0d0" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-            </StackLayout>
+                <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="200" HeightRequest="200"/>
+                </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="-5" Padding="-5">
                 <Button BackgroundColor="Gray" IsEnabled="False" TextColor="White" Text="LOGIN" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0"></Button>
                 <Button BackgroundColor="Gray" TextColor="White" Text="SIGN UP" Clicked="OpenRegisterPage" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
@@ -21,11 +19,15 @@
                 <BoxView HorizontalOptions="FillAndExpand" Color="Black" HeightRequest="6" Opacity="0.7"></BoxView>
                 <BoxView HorizontalOptions="FillAndExpand" HeightRequest="5" Opacity="0"></BoxView>
             </StackLayout>
-            <StackLayout Padding="40">
-                <Entry Keyboard="Email" Placeholder="Email" PlaceholderColor="Gray" x:Name="Email"/>
-                <Entry Placeholder="Password" IsPassword="True" PlaceholderColor="Gray" x:Name="Password"/>
-                <Button Text="LOGIN" Padding="20"  Margin="30" BackgroundColor="#008B8B" TextColor="White" FontAttributes="Bold" FontSize="15"/>
-            </StackLayout>
+            <ScrollView Orientation="Vertical">
+                <StackLayout Padding="40">
+                    <Entry x:Name="Email" Keyboard="Email" Placeholder="Email" PlaceholderColor="Gray"/>
+                    <Label x:Name="EmailErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
+                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" PlaceholderColor="Gray"/>
+                    <Label x:Name="PasswordErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
+                    <Button Clicked="TryLogin" Text="LOGIN" Padding="20"  Margin="30" BackgroundColor="#008B8B" TextColor="White" FontAttributes="Bold" FontSize="15"/>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </StackLayout>
 
