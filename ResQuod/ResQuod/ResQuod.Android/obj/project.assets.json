@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "MonoAndroid,Version=v9.0": {
+      "Plugin.NFC/0.1.15": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Java.Interop"
+        ],
+        "compile": {
+          "lib/monoandroid90/Plugin.NFC.dll": {}
+        },
+        "runtime": {
+          "lib/monoandroid90/Plugin.NFC.dll": {}
+        }
+      },
       "System.Numerics.Vectors/4.5.0": {
         "type": "package",
         "compile": {
@@ -804,6 +816,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Plugin.NFC": "0.1.15",
           "Xamarin.Essentials": "1.3.1",
           "Xamarin.Forms": "4.4.0.991265"
         },
@@ -817,6 +830,24 @@
     }
   },
   "libraries": {
+    "Plugin.NFC/0.1.15": {
+      "sha512": "jcBtkSq8Bv/9Q6DEHuRqoa4mrZiItp3V5KsxdFoyBIL+lKva2XZPYUNRMJsdS+6Q5x+sFGkWKV8777LHZpkeKg==",
+      "type": "package",
+      "path": "plugin.nfc/0.1.15",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid81/Plugin.NFC.dll",
+        "lib/monoandroid90/Plugin.NFC.dll",
+        "lib/netstandard1.0/Plugin.NFC.dll",
+        "lib/netstandard2.0/Plugin.NFC.dll",
+        "lib/uap10.0.16299/Plugin.NFC.dll",
+        "lib/uap10.0.16299/Plugin.NFC.pri",
+        "lib/xamarinios10/Plugin.NFC.dll",
+        "plugin.nfc.0.1.15.nupkg.sha512",
+        "plugin.nfc.nuspec"
+      ]
+    },
     "System.Numerics.Vectors/4.5.0": {
       "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
       "type": "package",
@@ -1928,6 +1959,7 @@
   },
   "projectFileDependencyGroups": {
     "MonoAndroid,Version=v9.0": [
+      "Plugin.NFC >= 0.1.15",
       "ResQuod >= 1.0.0",
       "Xamarin.Essentials >= 1.3.1",
       "Xamarin.Forms >= 4.4.0.991265"
@@ -1975,6 +2007,10 @@
     "frameworks": {
       "monoandroid90": {
         "dependencies": {
+          "Plugin.NFC": {
+            "target": "Package",
+            "version": "[0.1.15, )"
+          },
           "Xamarin.Essentials": {
             "target": "Package",
             "version": "[1.3.1, )"

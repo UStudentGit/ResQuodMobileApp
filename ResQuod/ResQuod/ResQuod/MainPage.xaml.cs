@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ResQuod.Main_Page_Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace ResQuod
             //Init panels
             HomePanel.Content = new HomePanel();
             AttendancePanel.Content = new AttendancePanel();
+
+            AddChipPanel.Content = new NFCPanel();
             //kolejnyElement.Content = new NazwaPanelu();
 
 
