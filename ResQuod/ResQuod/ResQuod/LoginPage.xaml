@@ -12,8 +12,8 @@
                 <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="200" HeightRequest="200"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="-5" Padding="-5">
-                <Button BackgroundColor="Gray" IsEnabled="False" TextColor="White" Text="LOGIN" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0"></Button>
-                <Button BackgroundColor="Gray" TextColor="White" Text="SIGN UP" Clicked="OpenRegisterPage" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                <Button BackgroundColor="#808080" IsEnabled="False" TextColor="White" Text="LOGIN" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0"></Button>
+                <Button BackgroundColor="#808080" TextColor="White" Text="SIGN UP" Clicked="OpenRegisterPage" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="-5" Margin="0,4">
                 <BoxView HorizontalOptions="FillAndExpand" Color="Black" HeightRequest="6" Opacity="0.7"></BoxView>

@@ -11,12 +11,20 @@ using Xamarin.Forms.Xaml;
 namespace ResQuod
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : ContentPage
+    public partial class MainPage : TabbedPage
     {
         public MainPage()
         {
             InitializeComponent();
-            StartLabel.Text = "Welcome" + Preferences.Get("UserNick", "").ToString();
+
+            //Init panels
+            HomePanel.Content = new HomePanel();
+            AttendancePanel.Content = new AttendancePanel();
+            //kolejnyElement.Content = new NazwaPanelu();
+
+
+
+            //StartLabel.Text = "Welcome" + Preferences.Get("UserNick", "").ToString();
         }
     }
 }

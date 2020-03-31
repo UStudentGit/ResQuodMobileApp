@@ -17,6 +17,7 @@ namespace ResQuod
         public LoginPage()
         {
             InitializeComponent();
+            
         }
 
         private void OpenRegisterPage(object sender, EventArgs e)
