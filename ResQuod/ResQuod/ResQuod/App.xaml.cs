@@ -15,10 +15,12 @@ namespace ResQuod
 
         protected override void OnStart()
         {
+            NFCController.StopAll();
         }
 
         protected override void OnSleep()
         {
+            NFCController.StopAll();
         }
 
         protected override void OnResume()

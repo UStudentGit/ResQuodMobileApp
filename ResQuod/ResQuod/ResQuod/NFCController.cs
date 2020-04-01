@@ -7,16 +7,16 @@ using Xamarin.Forms;
 namespace ResQuod
 {
     //https://github.com/franckbour/Plugin.NFC
-    class NFCController
+    static class NFCController
     {
 
-        public bool IsAvailable {
+        public static bool IsAvailable {
             get {
                 return CrossNFC.IsSupported && CrossNFC.Current.IsAvailable;
             } 
         }
 
-        public bool IsEnabled
+        public static bool IsEnabled
         {
             get
             {
@@ -24,58 +24,80 @@ namespace ResQuod
             }
         }
 
-        private List<string> messages;
-        public void StartListening(NdefMessageReceivedEventHandler MessageReceivedHandler)
+        private static string currentMessage;
+        private static NdefMessageReceivedEventHandler messageReceivedHandler;
+        private static NdefMessagePublishedEventHandler messagePublishedHandler;
+        private static TagDiscoveredEventHandler tagDiscoveredHandler;
+
+
+        public static void StartListening(NdefMessageReceivedEventHandler MessageReceivedHandler)
         {
+            //Clear all
             StopAll();
+
+            //Start NFC
             CrossNFC.Current.StartListening();
-            CrossNFC.Current.OnMessageReceived += MessageReceivedHandler;
-            //CrossNFC.Current.OnMessageReceived += StopListening;
+
+            //Handlers
+            messageReceivedHandler = MessageReceivedHandler;
+            CrossNFC.Current.OnMessageReceived += messageReceivedHandler;
+            
         }
 
-        private void StopAll()
+        public static void StopAll()
         {
-            CrossNFC.Current.StartListening();
-            CrossNFC.Current.StopPublishing();
+            try
+            {
+                CrossNFC.Current.OnMessageReceived -= messageReceivedHandler;
+                messageReceivedHandler = null;
+
+                CrossNFC.Current.OnMessagePublished -= messagePublishedHandler;
+                messagePublishedHandler = null;
+
+                CrossNFC.Current.OnTagDiscovered -= tagDiscoveredHandler;
+                tagDiscoveredHandler = null;
+
+                CrossNFC.Current.StopListening();
+                CrossNFC.Current.StopPublishing();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
         }
 
-        public void StopListening(NdefMessageReceivedEventHandler MessageReceivedHandler)
-        {
-            CrossNFC.Current.StartListening();
-            CrossNFC.Current.StopPublishing();
-            CrossNFC.Current.StopListening();
-            CrossNFC.Current.OnMessageReceived -= MessageReceivedHandler;
-        }
 
-        public void StartPublishing(List<string> messages, NdefMessagePublishedEventHandler MessagePublishedHandler)
+        public static void StartPublishing(string messages, NdefMessagePublishedEventHandler MessagePublishedHandler)
         {
+            //Clear all
             StopAll();
-            this.messages = messages;
+            currentMessage = messages;
+
+            //Start NFC
             CrossNFC.Current.StartListening();
             CrossNFC.Current.StartPublishing();
-            CrossNFC.Current.OnTagDiscovered += SendData;
-            CrossNFC.Current.OnMessagePublished += MessagePublishedHandler;
-            CrossNFC.Current.OnMessagePublished += StopPublishing;
+
+            //Hnadlers
+            tagDiscoveredHandler = SendData;
+            CrossNFC.Current.OnTagDiscovered += tagDiscoveredHandler;
+
+            messagePublishedHandler = MessagePublishedHandler;
+            CrossNFC.Current.OnMessagePublished += messagePublishedHandler;
         }
 
-        private void StopPublishing(ITagInfo tagInfo)
-        {
-            //CrossNFC.Current.StopPublishing();
-            //CrossNFC.Current.StopListening();
-        }
-
-        private void SendData(ITagInfo tagInfo, bool format)
+        private static void SendData(ITagInfo tagInfo, bool format)
         {
             try
             {
                 ITagInfo info = tagInfo;
+
                 List<NFCNdefRecord> records = new List<NFCNdefRecord>();
-                foreach (string message in messages)
-                {
-                    NFCNdefRecord record = new NFCNdefRecord() { MimeType = "", TypeFormat = NFCNdefTypeFormat.WellKnown, Payload = Encoding.ASCII.GetBytes(message) };
-                    Application.Current.MainPage.DisplayAlert("Witam", Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(message)).ToString(), "Ok");
-                    records.Add(record);
-                }
+
+                NFCNdefRecord record = new NFCNdefRecord() { MimeType = "", TypeFormat = NFCNdefTypeFormat.WellKnown, Payload = Encoding.ASCII.GetBytes(currentMessage) };
+
+                records.Add(record);
+                
 
                 info.Records = records.ToArray();
                 CrossNFC.Current.PublishMessage(info);

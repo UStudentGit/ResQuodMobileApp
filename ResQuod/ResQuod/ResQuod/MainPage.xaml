@@ -4,29 +4,32 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ResQuod.MainPage">
+             x:Class="ResQuod.MainPage"
+            PropertyChanged="TabbedPage_PagesChanged"
+            x:Name="MainPage_TabbedPage"
+            >
 
-    <ContentPage Title="Home" x:Name="HomePanel">
+    <ContentPage Title="Home" x:Name="HomePanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Attendance" x:Name="AttendancePanel">
+    <ContentPage Title="Attendance" x:Name="AttendancePanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Events" x:Name="EventsPanel">
+    <ContentPage Title="Events" x:Name="EventsPanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Add chip" x:Name="AddChipPanel">
+    <ContentPage Title="Add chip" x:Name="AddChipPanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="User" x:Name="UserPanel">
+    <ContentPage Title="User" x:Name="UserPanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>

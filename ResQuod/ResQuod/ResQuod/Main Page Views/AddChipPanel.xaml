@@ -4,16 +4,18 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ResQuod.AttendancePanel">
-    
+             x:Class="ResQuod.Main_Page_Views.AddChipPanel">
   <ContentView.Content>
-      <StackLayout VerticalOptions="Start">
-            <StackLayout Margin="0,20,0,50">
-                <Label Text="Attending to:" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"></Label>
+      <StackLayout>
+            <StackLayout Margin="0,20,0,50" HorizontalOptions="Center" VerticalOptions="Start">
+                <Label Text="Programming chip:" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"></Label>
+                <Label x:Name="TagId_Label" Text="Tag id: " HorizontalTextAlignment="Center"></Label>
+                <Label Text="With event data:" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"></Label>
                 <Label x:Name="EventName_Label" Text="Event name:" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="EventDate_Label" Text="Event date:" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="EventId_Label" Text="Event id:" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="TagId_Label" Text="Tag id: " HorizontalTextAlignment="Center"></Label>
+                <Entry x:Name="EventId_Entry" Placeholder="EventId_Test"></Entry>
+                <Button x:Name="Start" Clicked="StartWriting" Text="Write"></Button>
             </StackLayout>
             <StackLayout>
                 <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
@@ -22,6 +24,6 @@
                 <Image x:Name="ImageWait" Source="Scanning_wait.png" IsVisible="True" WidthRequest="200" HeightRequest="200"></Image>
                 <Image x:Name="ImageOk" Source="Scanning_ok.png" IsVisible="False" WidthRequest="200" HeightRequest="200"></Image>
             </StackLayout>
-      </StackLayout>
+        </StackLayout>
   </ContentView.Content>
 </ContentView>
