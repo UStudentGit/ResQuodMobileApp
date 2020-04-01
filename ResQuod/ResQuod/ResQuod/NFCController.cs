@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace ResQuod
 {
+    //https://github.com/franckbour/Plugin.NFC
     class NFCController
     {
 
@@ -22,36 +24,71 @@ namespace ResQuod
             }
         }
 
-        public NFCController()
-        {  
-
+        private List<string> messages;
+        public void StartListening(NdefMessageReceivedEventHandler MessageReceivedHandler)
+        {
+            StopAll();
+            CrossNFC.Current.StartListening();
+            CrossNFC.Current.OnMessageReceived += MessageReceivedHandler;
+            //CrossNFC.Current.OnMessageReceived += StopListening;
         }
 
-        public void StartListening()
+        private void StopAll()
         {
             CrossNFC.Current.StartListening();
+            CrossNFC.Current.StopPublishing();
         }
 
-        public void OnMessageReceived_AddHandler(NdefMessageReceivedEventHandler Current_OnMessageReceived)
+        public void StopListening(NdefMessageReceivedEventHandler MessageReceivedHandler)
         {
-            CrossNFC.Current.OnMessageReceived += Current_OnMessageReceived;
+            CrossNFC.Current.StartListening();
+            CrossNFC.Current.StopPublishing();
+            CrossNFC.Current.StopListening();
+            CrossNFC.Current.OnMessageReceived -= MessageReceivedHandler;
         }
 
-
-        public void OnMessageReceived_DeleteHandler(NdefMessageReceivedEventHandler Current_OnMessageReceived)
+        public void StartPublishing(List<string> messages, NdefMessagePublishedEventHandler MessagePublishedHandler)
         {
-            CrossNFC.Current.OnMessageReceived -= Current_OnMessageReceived;
+            StopAll();
+            this.messages = messages;
+            CrossNFC.Current.StartListening();
+            CrossNFC.Current.StartPublishing();
+            CrossNFC.Current.OnTagDiscovered += SendData;
+            CrossNFC.Current.OnMessagePublished += MessagePublishedHandler;
+            CrossNFC.Current.OnMessagePublished += StopPublishing;
         }
 
-        public void OnMessagePublished_AddHandler(NdefMessagePublishedEventHandler Current_OnMessagePublished)
+        private void StopPublishing(ITagInfo tagInfo)
         {
-            CrossNFC.Current.OnMessagePublished += Current_OnMessagePublished;
+            //CrossNFC.Current.StopPublishing();
+            //CrossNFC.Current.StopListening();
         }
 
-        public void OnMessagePublished_DeleteHandler(NdefMessagePublishedEventHandler Current_OnMessagePublished)
+        private void SendData(ITagInfo tagInfo, bool format)
         {
-            CrossNFC.Current.OnMessagePublished -= Current_OnMessagePublished;
+            try
+            {
+                ITagInfo info = tagInfo;
+                List<NFCNdefRecord> records = new List<NFCNdefRecord>();
+                foreach (string message in messages)
+                {
+                    NFCNdefRecord record = new NFCNdefRecord() { MimeType = "", TypeFormat = NFCNdefTypeFormat.WellKnown, Payload = Encoding.ASCII.GetBytes(message) };
+                    Application.Current.MainPage.DisplayAlert("Witam", Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(message)).ToString(), "Ok");
+                    records.Add(record);
+                }
+
+                info.Records = records.ToArray();
+                CrossNFC.Current.PublishMessage(info);
+            }
+            catch(Exception ex)
+            {
+                //Application.Current.MainPage.DisplayAlert("Error", ex.ToString(), "Ok");
+            }
+            
+            
         }
+       
+
 
     }
 }

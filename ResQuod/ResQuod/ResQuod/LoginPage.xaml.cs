@@ -27,17 +27,17 @@ namespace ResQuod
 
         private void TryLogin(object sender, EventArgs e)
         {
-            if (!InputDataCorrect())
-                return;
+           // if (!InputDataCorrect())
+            //    return;
 
             //Check user data in database
             //if incorrect
             //DisplayAlert(title: "Error", message: "Incorreto email or password", cancel: "Ok");
             //else
 
-            Preferences.Set("UserId", 2);
-            string nick = Email.Text;
-            Preferences.Set("UserNick", nick);
+            //Preferences.Set("UserId", 2);
+            //string nick = Email.Text;
+            //Preferences.Set("UserNick", nick);
             App.Current.MainPage = new MainPage();
             
         }

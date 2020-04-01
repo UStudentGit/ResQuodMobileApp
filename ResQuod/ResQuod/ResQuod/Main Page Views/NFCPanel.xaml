@@ -7,11 +7,25 @@
              x:Class="ResQuod.Main_Page_Views.NFCPanel">
   <ContentView.Content>
       <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-          <Label Text="" x:Name="Label1"/>
-          <Label Text="" x:Name="Label2"/>
-          <Label Text="" x:Name="Label3"/>
-          <Button Text="Start" Clicked="StartNFC"></Button>
-          <Button Text="Refresh" Clicked="RefreshNFC"></Button>
+          
+            <Label Text="Info:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="" x:Name="Label1"/>
+            <Label Text="" x:Name="Label2"/>
+            
+
+            <Label Text="Read:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="" x:Name="Label3"/>
+            <Label Text="" x:Name="Label4"/>
+            <Button Text="Start" Clicked="StartNFCListening"></Button>
+            <Button Text="Stop" Clicked="StopNFCListening"></Button>
+
+            <Label Text="Write:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="" x:Name="Label5"/>
+            <Label x:Name="Label6"></Label>
+            <Label x:Name="Label7"></Label>
+            <Entry Placeholder="MessageToWrite" x:Name="MessageEntry"></Entry>
+            <Button Text="Save" x:Name="SaveButton" Clicked="StartSending"></Button>
+            
       </StackLayout>
   </ContentView.Content>
 </ContentView>
