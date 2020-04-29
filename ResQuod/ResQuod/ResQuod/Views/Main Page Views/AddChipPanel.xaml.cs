@@ -1,4 +1,5 @@
 ﻿using Plugin.NFC;
+using ResQuod.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,12 +47,12 @@ namespace ResQuod.Main_Page_Views
             NFCController.StartPublishing(EventId_Entry.Text, OnMessagePublished);
         }
 
-        private void OnMessagePublished(ITagInfo tagInfo)
+        private void OnMessagePublished(NFCTag tag)
         {
             ImageWait.IsVisible = false;
             ImageOk.IsVisible = true;
-            TagId_Label.Text = tagInfo.SerialNumber.ToString();
-            EventId_Label.Text = tagInfo.Records is null ? "Id: empty" : "Id: " + tagInfo.Records[0].Message;
+            TagId_Label.Text = tag.TagId;
+            EventId_Label.Text = tag.MeetingCode;
             NFCController.StopAll();
         }
 
@@ -59,5 +60,7 @@ namespace ResQuod.Main_Page_Views
         {
             NFCController.StopAll();
         }
+
+
     }
 }

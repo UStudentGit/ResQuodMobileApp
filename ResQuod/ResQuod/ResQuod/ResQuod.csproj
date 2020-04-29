@@ -17,28 +17,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="LoginPage.xaml.cs">
+    <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Main Page Views\AttendancePanel.xaml.cs">
+    <Compile Update="Views\Main Page Views\AttendancePanel.xaml.cs">
       <DependentUpon>AttendancePanel.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Main Page Views\AddChipPanel.xaml">
+    <EmbeddedResource Update="Views\Main Page Views\AddChipPanel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Main Page Views\AttendancePanel.xaml">
+    <EmbeddedResource Update="Views\Main Page Views\AttendancePanel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Main Page Views\HomePanel.xaml">
+    <EmbeddedResource Update="Views\Main Page Views\HomePanel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MainPage.xaml">
+    <EmbeddedResource Update="Views\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="RegisterPage.xaml">
+    <EmbeddedResource Update="Views\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

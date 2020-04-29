@@ -1,4 +1,5 @@
 ﻿using Plugin.NFC;
+using ResQuod.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,29 +36,18 @@ namespace ResQuod
                 
         }
 
-        private void OnMessageReceived(ITagInfo tagInfo)
+        private void OnMessageReceived(NFCTag tag)
         {
-            TagId_Label.Text = "Tag ID: " + tagInfo.SerialNumber.ToString();
+            TagId_Label.Text = "Tag ID: " + tag.TagId;
 
             //Messages reader
-            string message = "";
-            if (tagInfo.IsEmpty)
+            string message = tag.MeetingCode;
+            if (message.Length==0)
             {
                 EventId_Label.Text = "Event ID: empty";
             }
             else
             {
-                foreach (NFCNdefRecord record in tagInfo.Records)
-                {
-                   // message += Encoding.ASCII.GetString(record.Payload).ToString() + ",\n";
-                    message += record.Message != null ? record.Message.ToString() : " ";
-                    //message += record.MimeType != null ? record.MimeType.ToString() + ",\n" : "-\n";
-                    //message += record.TypeFormat.ToString() + ",\n";
-                    //message += record.Uri != null ? record.Uri.ToString() + ",\n" : "-\n";
-                    //message += record.ExternalDomain != null ? record.ExternalDomain.ToString()    + ",\n" : "-\n";
-                    //message += record.ExternalType != null ? record.ExternalType.ToString() + ",\n" : "-\n";
-                }
-
                 EventId_Label.Text = "Event ID: " + message;
             }
 
