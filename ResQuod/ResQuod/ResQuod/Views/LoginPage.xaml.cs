@@ -32,16 +32,18 @@ namespace ResQuod
             if (!InputDataCorrect())
                 return;
 
-            //Check user data in database
-            bool success = await APIController.Login(new LoginModel() { Email = Email.Text, Password = Password.Text });
-            if (!success)
+            //Send request to database
+            var credentials = new LoginModel() { Email = Email.Text, Password = Password.Text };
+            Tuple<APIController.Response, string> response = await APIController.Login(credentials);
+
+            if (response.Item1 != APIController.Response.Success)
             {
-                await DisplayAlert(title: "Error", message: "Incorreto email or password", cancel: "Ok");
+                await DisplayAlert(title: "Error", message: "Error: " + response.Item2, cancel: "Ok");
                 return;
             }
             else
             {
-                await DisplayAlert(title: "Success", message: "Token: " + APIController.Token, cancel: "Ok");
+                await DisplayAlert(title: "Success", message: "Token: " + response.Item2, cancel: "Ok");
             }
 
             Preferences.Set("UserId", 2);

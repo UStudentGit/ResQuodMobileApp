@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ResQuod.Controllers;
+using ResQuod.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,19 +24,31 @@ namespace ResQuod
             App.Current.MainPage = new LoginPage();
         }
 
-        private void TryRegister(object sender, EventArgs e)
+        private async void TryRegister(object sender, EventArgs e)
         {
             if (!InputDataCorrect())
                 return;
 
-            //Check if user exist in database
-            //if exist
-            //DisplayAlert(title: "Error", message: "Email already in use", cancel: "Ok");
-            //else
-            //Add user to database
-            //
-            
-            App.Current.MainPage = new LoginPage();
+            //Send request to database
+            var credentials = new RegisterModel() { 
+                Email = EmailInput.Text,
+                Password = PasswordInput.Text,
+                Name = NameInput.Text,
+                Surname = SurnameInput.Text
+            };
+
+            Tuple<APIController.Response, string> response = await APIController.Register(credentials);
+
+            if (response.Item1 != APIController.Response.Success)
+            {
+                await DisplayAlert(title: "Error", message: "Error: " + response.Item2, cancel: "Ok");
+                return;
+            }
+            else
+            {
+                await DisplayAlert(title: "Success", message: "Account succesfully created!", cancel: "Ok");
+                App.Current.MainPage = new LoginPage();
+            }           
         }
 
         private bool InputDataCorrect()

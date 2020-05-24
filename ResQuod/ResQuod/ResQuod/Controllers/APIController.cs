@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ResQuod.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace ResQuod.Controllers
 
         public static string Token { get; private set; }
 
+        public enum Response
+        {
+            Success, IncorrectCredentials, BadRequest, InternetConnectionProblem, ServerProblem, UnknowError
+        }
+
         public APIController()
         {
             client = new HttpClient();
@@ -23,31 +29,85 @@ namespace ResQuod.Controllers
             //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
         }
 
-        public static async Task<bool> Login(LoginModel item)
+        public static async Task<Tuple<Response, string>> Login(LoginModel item)
         {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
+
             var uri = new Uri(string.Format(Constants.API_LoginUrl, string.Empty));
-           
+
             var json = JsonConvert.SerializeObject(item);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = null;
-            if (client == null)
-                return false;
-            response = await client.PostAsync(uri, content);
+            HttpResponseMessage response = await client.PostAsync(uri, content);
 
-            if (response == null)
-                return false;
 
-            if (response.IsSuccessStatusCode)
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                var data = await response.Content.ReadAsStringAsync();
-                token = JsonConvert.DeserializeObject<string>(data);
-                Debug.WriteLine("Token", token);
-                return true;
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.ServerProblem, _error.Message);
             }
 
-            return false;
-            
-}
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                token = JsonConvert.DeserializeObject<Token>(_data).Value;
+                Debug.WriteLine(token, "Token");
+                return Tuple.Create(Response.Success, token);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.UnknowError, error.Message);
+        }
+
+        public static async Task<Tuple<Response, string>> Register(RegisterModel item)
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
+
+            var uri = new Uri(string.Format(Constants.API_RegisternUrl, string.Empty));
+
+           // var serializerSettings = new JsonSerializerSettings();
+            //serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var json = JsonConvert.SerializeObject(item);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+
+            Debug.WriteLine(response.StatusCode.ToString() + " " + response.RequestMessage.ToString());
+
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Tuple.Create(Response.Success, "Succesfully created");
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.UnknowError, error.Message);
+        }
+
+        
     }
 }
