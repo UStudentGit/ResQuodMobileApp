@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQuod.Android", "ResQuod\ResQuod.Android\ResQuod.Android.csproj", "{4A6B147A-3E80-4467-A64E-8B502352E116}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQuod", "ResQuod\ResQuod\ResQuod.csproj", "{F3378F85-F121-4DF0-9AE0-1C3A4DDFB986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResQuod", "ResQuod\ResQuod\ResQuod.csproj", "{F3378F85-F121-4DF0-9AE0-1C3A4DDFB986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

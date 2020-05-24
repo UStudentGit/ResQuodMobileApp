@@ -9,7 +9,7 @@
     <StackLayout>
         <StackLayout x:Name="TopLayout"  Spacing="0">
             <StackLayout Padding="0,30" BackgroundColor="Gray">
-                <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="200" HeightRequest="200"/>
+                <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="180" HeightRequest="180"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="-5" Padding="-5">
                 <Button BackgroundColor="#808080" IsEnabled="False" TextColor="White" Text="LOGIN" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0"></Button>

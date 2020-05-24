@@ -49,6 +49,10 @@
               "version": "[2.0.3, )",
               "autoReferenced": true
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
             "Plugin.NFC": {
               "target": "Package",
               "version": "[0.1.15, )"

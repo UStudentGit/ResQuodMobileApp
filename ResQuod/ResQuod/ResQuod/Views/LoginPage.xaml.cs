@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ResQuod.Controllers;
+using ResQuod.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -25,19 +27,26 @@ namespace ResQuod
             App.Current.MainPage = new RegisterPage();
         }
 
-        private void TryLogin(object sender, EventArgs e)
+        private async void TryLogin(object sender, EventArgs e)
         {
-           // if (!InputDataCorrect())
-            //    return;
+            if (!InputDataCorrect())
+                return;
 
             //Check user data in database
-            //if incorrect
-            //DisplayAlert(title: "Error", message: "Incorreto email or password", cancel: "Ok");
-            //else
+            bool success = await APIController.Login(new LoginModel() { Email = Email.Text, Password = Password.Text });
+            if (!success)
+            {
+                await DisplayAlert(title: "Error", message: "Incorreto email or password", cancel: "Ok");
+                return;
+            }
+            else
+            {
+                await DisplayAlert(title: "Success", message: "Token: " + APIController.Token, cancel: "Ok");
+            }
 
-            //Preferences.Set("UserId", 2);
-            //string nick = Email.Text;
-            //Preferences.Set("UserNick", nick);
+            Preferences.Set("UserId", 2);
+            string nick = Email.Text;
+            Preferences.Set("UserNick", nick);
             App.Current.MainPage = new MainPage();
             
         }

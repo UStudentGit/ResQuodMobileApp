@@ -28,6 +28,7 @@ namespace ResQuod
 
             addChipPanel = new AddChipPanel();
             AddChipPanel_Content.Content = addChipPanel;
+
             //kolejnyElement.Content = new NazwaPanelu();
 
 
