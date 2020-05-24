@@ -8,5 +8,6 @@ namespace ResQuod.Models
     {
         public static readonly string API_LoginUrl = "http://whcp.pl:3200/login";
         public static readonly string API_RegisternUrl = "http://whcp.pl:3200/register";
+        public static readonly string API_GetUserUrl = "http://whcp.pl:3200/user";
     }
 }
