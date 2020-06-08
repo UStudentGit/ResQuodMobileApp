@@ -6,30 +6,28 @@
              mc:Ignorable="d"
              x:Class="ResQuod.MainPage"
             PropertyChanged="TabbedPage_PagesChanged"
-            x:Name="MainPage_TabbedPage"
-            >
-
-    <ContentPage Title="Home" x:Name="HomePanel_Content">
+            x:Name="MainPage_TabbedPage">
+    <ContentPage Title="Home" Icon="tabbed_home.png" x:Name="HomePanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Attendance" x:Name="AttendancePanel_Content">
+    <ContentPage Title="Attend" Icon="tabbed_attendance.png" x:Name="AttendancePanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Events" x:Name="EventsPanel_Content">
+    <ContentPage Title="Events" Icon="tabbed_events.png" x:Name="EventsPanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="Add chip" x:Name="AddChipPanel_Content">
+    <ContentPage Title="Chip" Icon="tabbed_addchip.png" x:Name="AddChipPanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
     </ContentPage>
-    <ContentPage Title="User" x:Name="UserPanel_Content">
+    <ContentPage Title="User" Icon="tabbed_user.png" x:Name="UserPanel_Content">
         <ContentPage.Content>
             <Label></Label>
         </ContentPage.Content>
