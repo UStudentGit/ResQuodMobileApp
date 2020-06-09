@@ -1,4 +1,5 @@
 ﻿using ResQuod.Main_Page_Views;
+using ResQuod.Views.Main_Page_Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace ResQuod
         private HomePanel homePannel;
         private AttendancePanel attendancePanel;
         private AddChipPanel addChipPanel;
+        private UserPannel userPannel;
         public MainPage()
         {
             InitializeComponent();
@@ -30,6 +32,9 @@ namespace ResQuod
 
             addChipPanel = new AddChipPanel();
             AddChipPanel_Content.Content = addChipPanel;
+
+            userPannel = new UserPannel();
+            UserPanel_Content.Content = userPannel;
 
             //kolejnyElement.Content = new NazwaPanelu();
 

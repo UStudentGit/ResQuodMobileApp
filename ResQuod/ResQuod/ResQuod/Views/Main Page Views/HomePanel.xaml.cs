@@ -15,11 +15,9 @@ namespace ResQuod
     //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePanel : ContentView
     {
-        private bool reset;
         public HomePanel()
         {
             InitializeComponent();
-            reset = false;
         }
 
         private async void OnLogoutButtonClicked(object sender, EventArgs args)
@@ -32,7 +30,7 @@ namespace ResQuod
             Tuple<APIController.Response, string> logout_response = await APIController.Logout();
             if (logout_response.Item1 != APIController.Response.Success)
             {
-                reset = true;
+                Logout_error1.Text = logout_response.Item2;
                 Logout_error1.IsVisible = true;
                 Logout_error2.IsVisible = true;
                 return;
@@ -47,7 +45,6 @@ namespace ResQuod
         {
             Logout_error1.IsVisible = false;
             Logout_error2.IsVisible = false;
-            reset = false;
         }
     }
 }

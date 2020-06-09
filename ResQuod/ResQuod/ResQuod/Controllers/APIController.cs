@@ -155,6 +155,39 @@ namespace ResQuod.Controllers
             return Tuple.Create(Response.UnknowError, error.Message, new User());
         }
 
+        public static async Task<Tuple<Response, string>> UserPatch(UserPatchModel item)
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
 
+            var uri = new Uri(string.Format(Constants.API_UserPatchUrl, string.Empty));
+
+            var json = JsonConvert.SerializeObject(item);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+
+            Debug.WriteLine(response.StatusCode.ToString() + " " + response.RequestMessage.ToString());
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Tuple.Create(Response.Success, "Data updated succesfully");
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.UnknowError, error.Message);
+        }
     }
 }
