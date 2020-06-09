@@ -14,6 +14,7 @@ namespace ResQuod
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : TabbedPage
     {
+        private HomePanel homePannel;
         private AttendancePanel attendancePanel;
         private AddChipPanel addChipPanel;
         public MainPage()
@@ -21,7 +22,8 @@ namespace ResQuod
             InitializeComponent();
 
             //Init panels
-            HomePanel_Content.Content = new HomePanel();
+            homePannel = new HomePanel();
+            HomePanel_Content.Content = homePannel;
 
             attendancePanel = new AttendancePanel();
             AttendancePanel_Content.Content = attendancePanel;
@@ -40,7 +42,11 @@ namespace ResQuod
         {
             //Application.Current.MainPage.DisplayAlert("Error", "Test", "Ok");
             if (MainPage_TabbedPage != null && MainPage_TabbedPage.CurrentPage != null)
-                if(MainPage_TabbedPage.CurrentPage.Title == "Attendance")
+                if(MainPage_TabbedPage.CurrentPage.Title == "Home")
+                {
+                    //homePannel.ResetMessages();
+                }
+                else if(MainPage_TabbedPage.CurrentPage.Title == "Attendance")
                 {
                     addChipPanel.StopAll();
                     attendancePanel = new AttendancePanel();
@@ -62,5 +68,6 @@ namespace ResQuod
                     attendancePanel.StopListening();
                 }
         }
+
     }
 }

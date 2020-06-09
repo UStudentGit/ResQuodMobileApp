@@ -637,25 +637,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Matt\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\danwo\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj",
+      "projectUniqueName": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\helplox\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj",
       "projectName": "ResQuod",
-      "projectPath": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj",
-      "packagesPath": "C:\\Users\\Matt\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\obj\\",
+      "projectPath": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\helplox\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj",
+      "packagesPath": "C:\\Users\\danwo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\helplox\\ResQuod\\ResQuod\\ResQuod\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Matt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\danwo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],

@@ -109,6 +109,14 @@ namespace ResQuod.Controllers
             return Tuple.Create(Response.UnknowError, error.Message);
         }
 
+        public static async Task<Tuple<Response, string>> Logout()
+        {
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
+
+            token = "";
+            return Tuple.Create(Response.Success, token);
+        }
 
         public static async Task<Tuple<Response, string, User>> GetUser()
         {
