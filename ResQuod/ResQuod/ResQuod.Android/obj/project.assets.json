@@ -2007,24 +2007,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\danwo\\.nuget\\packages\\": {},
+    "C:\\Users\\Matt\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\ResQuod\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod.Android\\ResQuod.Android.csproj",
+      "projectUniqueName": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod.Android\\ResQuod.Android.csproj",
       "projectName": "ResQuod.Android",
-      "projectPath": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\ResQuod\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod.Android\\ResQuod.Android.csproj",
-      "packagesPath": "C:\\Users\\danwo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\ResQuod\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod.Android\\obj\\",
+      "projectPath": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod.Android\\ResQuod.Android.csproj",
+      "packagesPath": "C:\\Users\\Matt\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\danwo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Matt\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -2038,8 +2038,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-            "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\ResQuod\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj": {
-              "projectPath": "C:\\Users\\danwo\\Desktop\\Studia\\Semestr_6\\PZ\\ResQuod\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj"
+            "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj": {
+              "projectPath": "D:\\GitHub\\ResQuodMobileApp\\ResQuod\\ResQuod\\ResQuod\\ResQuod.csproj"
             }
           }
         }
