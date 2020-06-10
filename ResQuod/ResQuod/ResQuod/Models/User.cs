@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ResQuod.Models
 {
-    class User
+    public class User
     {
         [JsonProperty("email")]
         public string Email { get; set; }

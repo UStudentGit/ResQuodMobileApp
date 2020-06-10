@@ -18,7 +18,14 @@ namespace ResQuod
     {
         public LoginPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            var user = SessionController.GetUserData();
+            if (user != null)
+            {
+                Email.Text = user.Email;
+                Password.Text = user.Password;
+            }
         }
 
         private void OpenRegisterPage(object sender, EventArgs e)
@@ -62,6 +69,7 @@ namespace ResQuod
                 string nick = user.Name + " " + user.Surname;
                 await DisplayAlert(title: "Success", message: "Welcome back " + nick + "!", cancel: "Continue");
                 Preferences.Set("UserNick", nick);
+                SessionController.SaveUserData(new UserSessionData() { Email = Email.Text, Password = Password.Text });
                 App.Current.MainPage = new MainPage();
             }
         }
@@ -69,7 +77,7 @@ namespace ResQuod
         private bool IsInputDataCorrect()
         {
             //Check email
-            if (!IsEmailValid(Email.Text))
+            if (!FormDataHelper.IsEmailValid(Email.Text))
             {
                 EmailErrorLabel.Text = "Incorrect email";
                 return false;
@@ -87,17 +95,6 @@ namespace ResQuod
             return true;
         }
 
-        bool IsEmailValid(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        
     }
 }

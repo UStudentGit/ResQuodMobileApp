@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ResQuod.Models
 {
-    class Meeting
+    public class Meeting
     {
         public int MeetingId { get; set; }
 
