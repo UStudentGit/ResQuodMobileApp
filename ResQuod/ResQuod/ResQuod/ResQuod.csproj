@@ -24,6 +24,9 @@
     <Compile Update="Views\Main Page Views\AttendancePanel.xaml.cs">
       <DependentUpon>AttendancePanel.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Main Page Views\UserPanel.xaml.cs">
+      <DependentUpon>UserPanel.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,7 +39,7 @@
     <EmbeddedResource Update="Views\Main Page Views\HomePanel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Main Page Views\UserPannel.xaml">
+    <EmbeddedResource Update="Views\Main Page Views\UserPanel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">

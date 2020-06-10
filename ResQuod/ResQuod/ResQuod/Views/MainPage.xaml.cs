@@ -15,17 +15,17 @@ namespace ResQuod
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : TabbedPage
     {
-        private HomePanel homePannel;
+        private HomePanel homePanel;
         private AttendancePanel attendancePanel;
         private AddChipPanel addChipPanel;
-        private UserPannel userPannel;
+        private UserPanel userPanel;
         public MainPage()
         {
             InitializeComponent();
 
             //Init panels
-            homePannel = new HomePanel();
-            HomePanel_Content.Content = homePannel;
+            homePanel = new HomePanel();
+            HomePanel_Content.Content = homePanel;
 
             attendancePanel = new AttendancePanel();
             AttendancePanel_Content.Content = attendancePanel;
@@ -33,8 +33,8 @@ namespace ResQuod
             addChipPanel = new AddChipPanel();
             AddChipPanel_Content.Content = addChipPanel;
 
-            userPannel = new UserPannel();
-            UserPanel_Content.Content = userPannel;
+            userPanel = new UserPanel();
+            UserPanel_Content.Content = userPanel;
 
             //kolejnyElement.Content = new NazwaPanelu();
 
@@ -49,7 +49,7 @@ namespace ResQuod
             if (MainPage_TabbedPage != null && MainPage_TabbedPage.CurrentPage != null)
                 if(MainPage_TabbedPage.CurrentPage.Title == "Home")
                 {
-                    //homePannel.ResetMessages();
+                    //homePanel.ResetMessages();
                 }
                 else if(MainPage_TabbedPage.CurrentPage.Title == "Attendance")
                 {

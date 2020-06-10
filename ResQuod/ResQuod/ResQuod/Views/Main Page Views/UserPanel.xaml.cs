@@ -12,9 +12,9 @@ using Xamarin.Forms.Xaml;
 namespace ResQuod.Views.Main_Page_Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class UserPannel : ContentView
+    public partial class UserPanel : ContentView
     {
-        public UserPannel()
+        public UserPanel()
         {
             InitializeComponent();
         }
