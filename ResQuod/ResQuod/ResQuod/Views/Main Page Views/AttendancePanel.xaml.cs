@@ -1,4 +1,5 @@
 ﻿using Plugin.NFC;
+using ResQuod.Controllers;
 using ResQuod.Models;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,14 @@ namespace ResQuod
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AttendancePanel : ContentView
     {
-        public AttendancePanel()
+        string currentTag = "test";
+        MainPage parent;
+
+        public AttendancePanel(MainPage parent)
         {
             InitializeComponent();
             StartNFCListening();
+            this.parent = parent;
             
         }
 
@@ -38,21 +43,15 @@ namespace ResQuod
 
         private void OnMessageReceived(NFCTag tag)
         {
-            TagId_Label.Text = "Tag ID: " + tag.TagId;
-
-            //Messages reader
-            string message = tag.MeetingCode;
-            if (message.Length==0)
-            {
-                EventId_Label.Text = "Event ID: empty";
-            }
-            else
-            {
-                EventId_Label.Text = "Event ID: " + message;
-            }
+            TagId_Label.Text = "ID: " + tag.TagId;
+            //TODO
+            //currentTag = tag.TagId;
+            Check_Button.IsEnabled = true;
+            Check_Button.BackgroundColor = Color.FromHex("008B8B"); ;
 
             ImageWait.IsVisible = false;
             ImageOk.IsVisible = true;
+
             StartAgain();
 
         }
@@ -68,5 +67,37 @@ namespace ResQuod
             NFCController.StopAll();
         }
 
+        private async void Check_Button_Clicked(object sender, EventArgs e)
+        {
+            Tuple<APIController.Response, string, PresenceResponse> response = await APIController.ReportPresence(currentTag);
+            //Logs.Text = response.Item1.ToString() + ": " + response.Item2;
+            if(response.Item1 == APIController.Response.Success)
+            {
+                var eventResponse = response.Item3;
+                await Application.Current.MainPage.DisplayAlert(response.Item1.ToString(), response.Item2 + "\nEvent: " + eventResponse.EventName , "Ok");
+                await Task.Run(async () =>
+                {
+                    var nextChildIndex = 2;
+                    await Task.Delay(300);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        parent.CurrentPage = parent.Children[nextChildIndex];
+                    });
+
+                });
+                return;
+            }
+
+            if (response.Item1 == APIController.Response.BadRequest)
+            {
+                var eventResponse = response.Item3;
+                await Application.Current.MainPage.DisplayAlert(response.Item1.ToString(), "You have no permission to report presence in this event", "Ok");
+                return;
+            }
+
+            await Application.Current.MainPage.DisplayAlert(response.Item1.ToString(), response.Item2, "Ok");
+            return;
+            
+        }
     }
 }

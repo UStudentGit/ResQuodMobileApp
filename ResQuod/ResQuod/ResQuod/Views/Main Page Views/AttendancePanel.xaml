@@ -7,20 +7,16 @@
              x:Class="ResQuod.AttendancePanel">
     
   <ContentView.Content>
-      <StackLayout VerticalOptions="Start">
-            <StackLayout Margin="0,20,0,50">
-                <Label Text="Attending to:" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"></Label>
-                <Label x:Name="EventName_Label" Text="Event name:" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="EventDate_Label" Text="Event date:" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="EventId_Label" Text="Event id:" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="TagId_Label" Text="Tag id: " HorizontalTextAlignment="Center"></Label>
-            </StackLayout>
-            <StackLayout>
+      <StackLayout VerticalOptions="Center" >            
+            <StackLayout HorizontalOptions="Center">
                 <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>
                 <Image x:Name="ImageWait" Source="Scanning_wait.png" IsVisible="True" WidthRequest="200" HeightRequest="200"></Image>
                 <Image x:Name="ImageOk" Source="Scanning_ok.png" IsVisible="False" WidthRequest="200" HeightRequest="200"></Image>
+                <Label x:Name="TagId_Label" Text="" Margin="0,50,0,0" HorizontalTextAlignment="Center"></Label>
+                <Button x:Name="Check_Button" TextColor="White" Text="Report presence" Padding="15" Clicked="Check_Button_Clicked" IsEnabled="False"></Button>
+                <Label x:Name="Logs"></Label>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

@@ -148,5 +148,44 @@ namespace ResQuod.Controllers
         }
 
 
+        public static async Task<Tuple<Response, string, PresenceResponse>> ReportPresence(string tag)
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection", new PresenceResponse());
+
+            var uri = new Uri(string.Format(Constants.API_ReportPresence + "?tagId=" + tag, string.Empty));
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            //var req = new { tagId = tag};
+            //var json = JsonConvert.SerializeObject(req);
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+            
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem", new PresenceResponse());
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message, new PresenceResponse());
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var presenceResponse = JsonConvert.DeserializeObject<PresenceResponse>(_data);
+                return Tuple.Create(Response.Success, "Succesfully reported presence", presenceResponse);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.BadRequest, error.Message, new PresenceResponse());
+        }     
+
+
     }
 }

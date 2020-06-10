@@ -23,7 +23,7 @@ namespace ResQuod
             //Init panels
             HomePanel_Content.Content = new HomePanel();
 
-            attendancePanel = new AttendancePanel();
+            attendancePanel = new AttendancePanel(this);
             AttendancePanel_Content.Content = attendancePanel;
 
             addChipPanel = new AddChipPanel();
@@ -38,16 +38,19 @@ namespace ResQuod
 
         private void TabbedPage_PagesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            //Application.Current.MainPage.DisplayAlert("Error", "Test", "Ok");
+            
+
             if (MainPage_TabbedPage != null && MainPage_TabbedPage.CurrentPage != null)
-                if(MainPage_TabbedPage.CurrentPage.Title == "Attendance")
-                {
+            {
+                //Application.Current.MainPage.DisplayAlert("Error", MainPage_TabbedPage.CurrentPage.Title, "Ok");
+                if (MainPage_TabbedPage.CurrentPage.Title == AttendancePanel_Content.Title)
+                {                    
                     addChipPanel.StopAll();
-                    attendancePanel = new AttendancePanel();
-                    AttendancePanel_Content.Content = attendancePanel;
-                
+                    attendancePanel = new AttendancePanel(this);
+                    AttendancePanel_Content.Content = attendancePanel;                  
+
                 }
-                else if(MainPage_TabbedPage.CurrentPage.Title == "Add chip")
+                else if (MainPage_TabbedPage.CurrentPage.Title == AddChipPanel_Content.Title)
                 {
                     attendancePanel.StopListening();
                     addChipPanel = new AddChipPanel();
@@ -61,6 +64,7 @@ namespace ResQuod
                     addChipPanel.StopAll();
                     attendancePanel.StopListening();
                 }
+            }
         }
     }
 }
