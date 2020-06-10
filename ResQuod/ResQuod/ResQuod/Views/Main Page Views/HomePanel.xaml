@@ -7,7 +7,7 @@
              x:Class="ResQuod.HomePanel">
   <ContentView.Content>
       <StackLayout>
-          <Label Text="Home Panel" />
-      </StackLayout>
+            <Label Text="Home Panel" />
+        </StackLayout>
   </ContentView.Content>
 </ContentView>
