@@ -35,7 +35,6 @@ namespace ResQuod.Views.Main_Page_Views
             SurnameErrorLabel.Text = "";
             EmailErrorLabel.Text = "";
             PasswordErrorLabel.Text = "";
-            ConfirmPasswordErrorLabel.Text = "";
         }
 
         private void OnConfirmPatchButtonClicked(object sender, EventArgs args)
@@ -98,22 +97,6 @@ namespace ResQuod.Views.Main_Page_Views
                 return false;
             }
             EmailErrorLabel.Text = "";
-
-            //Check password
-            if (String.IsNullOrEmpty(PasswordInput.Text) || PasswordInput.Text.Length < 6)
-            {
-                PasswordErrorLabel.Text = "At least 6 characters required";
-                return false;
-            }
-            PasswordErrorLabel.Text = "";
-
-            //Check passwords equality
-            if (String.IsNullOrEmpty(PasswordInput.Text) || !ConfirmPasswordInput.Text.Equals(PasswordInput.Text))
-            {
-                ConfirmPasswordErrorLabel.Text = "Passwords are not the same";
-                return false;
-            }
-            ConfirmPasswordErrorLabel.Text = "";
 
             return true;
         }

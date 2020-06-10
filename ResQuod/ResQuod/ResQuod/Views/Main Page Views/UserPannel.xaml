@@ -18,16 +18,14 @@
                     IsVisible="True"/>
             <Label x:Name="PatchSuccess" Text="Data patched successfully!" HorizontalTextAlignment="Center" FontSize="12" TextColor="Green" IsVisible="False"/>
             <StackLayout x:Name="PatchForm" IsVisible="False">
-                <Entry x:Name="NameInput" Placeholder="Name" PlaceholderColor="Gray"/>
+                <Entry x:Name="NameInput" Placeholder="Change name" PlaceholderColor="Gray"/>
                 <Label x:Name="NameErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
-                <Entry x:Name="SurnameInput" Placeholder="Surname" PlaceholderColor="Gray"/>
+                <Entry x:Name="SurnameInput" Placeholder="Change surname" PlaceholderColor="Gray"/>
                 <Label x:Name="SurnameErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
-                <Entry x:Name="EmailInput" Keyboard="Email" Placeholder="Email" PlaceholderColor="Gray"/>
+                <Entry x:Name="EmailInput" Keyboard="Email" Placeholder="Change email" PlaceholderColor="Gray"/>
                 <Label x:Name="EmailErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
-                <Entry x:Name="PasswordInput" Placeholder="New password" IsPassword="True" PlaceholderColor="Gray"/>
+                <Entry x:Name="PasswordInput" Placeholder="Password" IsPassword="True" PlaceholderColor="Gray"/>
                 <Label x:Name="PasswordErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
-                <Entry x:Name="ConfirmPasswordInput" Placeholder="Confirm new password" IsPassword="True" PlaceholderColor="Gray"/>
-                <Label x:Name="ConfirmPasswordErrorLabel" Text="" TextColor="Red" Margin="5,-15"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />

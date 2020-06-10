@@ -164,11 +164,15 @@ namespace ResQuod.Controllers
             var uri = new Uri(string.Format(Constants.API_UserPatchUrl, string.Empty));
 
             var json = JsonConvert.SerializeObject(item);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var method = new HttpMethod("PATCH");
+            var request = new HttpRequestMessage(method, uri)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage response = await client.PostAsync(uri, content);
+            HttpResponseMessage response = await client.SendAsync(request);
 
-            Debug.WriteLine(response.StatusCode.ToString() + " " + response.RequestMessage.ToString());
+            Debug.WriteLine("PATCHING - " + response.StatusCode.ToString() + " " + response.RequestMessage.ToString());
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
                 return Tuple.Create(Response.ServerProblem, "Server problem");
