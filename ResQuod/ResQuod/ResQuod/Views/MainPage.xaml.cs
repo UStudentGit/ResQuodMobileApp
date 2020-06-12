@@ -1,4 +1,5 @@
 ﻿using ResQuod.Main_Page_Views;
+using ResQuod.Views.Main_Page_Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,20 +15,26 @@ namespace ResQuod
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : TabbedPage
     {
+        private HomePanel homePanel;
         private AttendancePanel attendancePanel;
         private AddChipPanel addChipPanel;
+        private UserPanel userPanel;
         public MainPage()
         {
             InitializeComponent();
 
             //Init panels
-            HomePanel_Content.Content = new HomePanel();
+            homePanel = new HomePanel();
+            HomePanel_Content.Content = homePanel;
 
             attendancePanel = new AttendancePanel(this);
             AttendancePanel_Content.Content = attendancePanel;
 
             addChipPanel = new AddChipPanel();
             AddChipPanel_Content.Content = addChipPanel;
+
+            userPanel = new UserPanel();
+            UserPanel_Content.Content = userPanel;
 
             //kolejnyElement.Content = new NazwaPanelu();
 
@@ -38,8 +45,6 @@ namespace ResQuod
 
         private void TabbedPage_PagesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            
-
             if (MainPage_TabbedPage != null && MainPage_TabbedPage.CurrentPage != null)
             {
                 //Application.Current.MainPage.DisplayAlert("Error", MainPage_TabbedPage.CurrentPage.Title, "Ok");
@@ -66,5 +71,6 @@ namespace ResQuod
                 }
             }
         }
+
     }
 }

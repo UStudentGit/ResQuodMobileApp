@@ -5,9 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="ResQuod.HomePanel">
-  <ContentView.Content>
-      <StackLayout>
+    <ContentView.Content>
+        <StackLayout>
             <Label Text="Home Panel" />
         </StackLayout>
   </ContentView.Content>
 </ContentView>
+
