@@ -60,8 +60,10 @@ namespace ResQuod
             {
                 var user = getUser_response.Item3;
                 string nick = user.Name + " " + user.Surname;
+                string useremail = user.Email;
                 await DisplayAlert(title: "Success", message: "Welcome back " + nick + "!", cancel: "Continue");
                 Preferences.Set("UserNick", nick);
+                Preferences.Set("UserEmail", useremail);
                 App.Current.MainPage = new MainPage();
             }
         }

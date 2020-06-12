@@ -7,16 +7,7 @@
              x:Class="ResQuod.HomePanel">
   <ContentView.Content>
       <StackLayout>         
-            <Button Text="LOGOUT"
-                    Clicked="OnLogoutButtonClicked"
-                    Padding="20"  
-                    Margin="30" 
-                    BackgroundColor="#008B8B" 
-                    TextColor="Black" 
-                    FontAttributes="Bold" 
-                    FontSize="15"/>
-            <Label x:Name="Logout_error1" Text="Something went wrong" HorizontalTextAlignment="Center" FontSize="12" TextColor="Red" IsVisible="False"></Label>
-            <Label x:Name="Logout_error2" Text="Try again!" HorizontalTextAlignment="Center" FontSize="12" TextColor="Red" IsVisible="False"></Label>
+
       </StackLayout>
     </ContentView.Content>
 </ContentView> 

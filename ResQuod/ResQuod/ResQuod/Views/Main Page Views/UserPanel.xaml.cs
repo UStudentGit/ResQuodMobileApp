@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,6 +17,13 @@ namespace ResQuod.Views.Main_Page_Views
         public UserPanel()
         {
             InitializeComponent();
+            Nick.Text = Preferences.Get("UserNick", "Default nick");
+            Email.Text = Preferences.Get("UserEmail", "Default email");
+        }
+
+        private async void OnLogoutButtonClicked(object sender, EventArgs args)
+        {
+            await LogOut();
         }
 
         private void OnPatchDataButtonClicked(object sender, EventArgs args)
@@ -29,8 +36,8 @@ namespace ResQuod.Views.Main_Page_Views
         {
             PatchForm.IsVisible = false;
             PatchDataButton.IsVisible = true;
-            Patch_error1.IsVisible = true;
-            Patch_error2.IsVisible = true;
+            Patch_error1.IsVisible = false;
+            Patch_error2.IsVisible = false;
             NameErrorLabel.Text = "";
             SurnameErrorLabel.Text = "";
             EmailErrorLabel.Text = "";
@@ -42,11 +49,27 @@ namespace ResQuod.Views.Main_Page_Views
             TryPatch();
         }
 
+        private async Task LogOut()
+        {
+            Tuple<APIController.Response, string> logout_response = await APIController.Logout();
+            if (logout_response.Item1 != APIController.Response.Success)
+            {
+                Logout_error1.Text = logout_response.Item2;
+                Logout_error1.IsVisible = true;
+                Logout_error2.IsVisible = true;
+                return;
+            }
+
+            string nick = "";
+            Preferences.Set("UserNick", nick);
+            App.Current.MainPage = new LoginPage();
+        }
+
         private async void TryPatch()
         {
             if (!InputDataCorrect())
                 return;
-
+            
             //Send request to database
             var credentials = new UserPatchModel()
             {
@@ -65,7 +88,7 @@ namespace ResQuod.Views.Main_Page_Views
                 Patch_error2.IsVisible = true;
                 return;
             }
-            //sukces i co dalej?
+
             PatchForm.IsVisible = false;
             PatchDataButton.IsVisible = true;
             PatchSuccess.IsVisible = true;

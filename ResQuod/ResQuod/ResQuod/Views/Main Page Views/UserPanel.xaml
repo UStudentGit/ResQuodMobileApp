@@ -7,15 +7,13 @@
              x:Class="ResQuod.Views.Main_Page_Views.UserPanel">
   <ContentView.Content>
         <StackLayout>
-            <Button x:Name="PatchDataButton" Text="Patch data"
-                    Clicked="OnPatchDataButtonClicked"
-                    Padding="20"  
-                    Margin="30" 
-                    BackgroundColor="#008B8B" 
-                    TextColor="Black" 
-                    FontAttributes="Bold" 
-                    FontSize="15"
-                    IsVisible="True"/>
+            <Label x:Name="Welcome" Text="Welcome!" FontSize="20" TextColor="black" />
+            <Label x:Name="Nick" Text="" FontSize="12" TextColor="black" />
+            <Label x:Name="Email" Text="" FontSize="12" TextColor="black" />
+            <Button Clicked="OnLogoutButtonClicked" Text="LOGOUT" Padding="20" Margin="30" BackgroundColor="#008B8B" TextColor="Black" FontAttributes="Bold" FontSize="15"/>
+            <Label x:Name="Logout_error1" Text="Something went wrong with logout" HorizontalTextAlignment="Center" FontSize="12" TextColor="Red" IsVisible="False"></Label>
+            <Label x:Name="Logout_error2" Text="Try again!" HorizontalTextAlignment="Center" FontSize="12" TextColor="Red" IsVisible="False"></Label>
+            <Button x:Name="PatchDataButton" Text="Patch data" Clicked="OnPatchDataButtonClicked" Padding="20" Margin="30" BackgroundColor="#008B8B" TextColor="Black" FontAttributes="Bold" FontSize="15" IsVisible="True"/>
             <Label x:Name="PatchSuccess" Text="Data patched successfully!" HorizontalTextAlignment="Center" FontSize="12" TextColor="Green" IsVisible="False"/>
             <StackLayout x:Name="PatchForm" IsVisible="False">
                 <Entry x:Name="NameInput" Placeholder="Change name" PlaceholderColor="Gray"/>
