@@ -10,20 +10,18 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ResQuod
+namespace ResQuod.Views.MainViews
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AttendancePanel : ContentView
+    public partial class AttendancePanel : ContentPage
     {
         string currentTag = "test";
-        MainPage parent;
+        //MainPage parent;
 
-        public AttendancePanel(MainPage parent)
+        public AttendancePanel()
         {
             InitializeComponent();
             StartNFCListening();
-            this.parent = parent;
-            
+            //this.parent = parent;
         }
 
         public void StartNFCListening()
@@ -53,7 +51,6 @@ namespace ResQuod
             ImageOk.IsVisible = true;
 
             StartAgain();
-
         }
 
         public async Task StartAgain()
@@ -62,7 +59,7 @@ namespace ResQuod
             NFCController.StartListening(OnMessageReceived);
         }
 
-        public void StopListening()
+        public void StopNFC()
         {
             NFCController.StopAll();
         }
@@ -81,7 +78,8 @@ namespace ResQuod
                     await Task.Delay(300);
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        parent.CurrentPage = parent.Children[nextChildIndex];
+                        // TODO: jak chodzi o zmianę strony to Shell.Current.GoToAsync
+                        //parent.CurrentPage = parent.Children[nextChildIndex];
                     });
 
                 });

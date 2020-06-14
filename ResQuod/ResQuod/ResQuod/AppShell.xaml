@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:ResQuod.Views.MainViews"
+       x:Class="ResQuod.AppShell"
+       Navigating="OnNavigating"
+       Visual="Material">
+    <TabBar Style="{StaticResource ShellBaseStyle}">
+        <Tab Title="Home" Icon="tabbed_home.png">
+            <ShellContent Route="homePanel" ContentTemplate="{DataTemplate views:HomePanel}" />
+        </Tab>
+        <Tab Title="Attend" Icon="tabbed_attendance.png">
+            <ShellContent Route="attendence" ContentTemplate="{DataTemplate views:AttendancePanel}" />
+        </Tab>
+        <Tab Title="Events" Icon="tabbed_events.png">
+            <ShellContent Route="events" ContentTemplate="{DataTemplate views:EventsPanel}" />
+        </Tab>
+        <Tab Title="Add chip" Icon="tabbed_addchip.png">
+            <ShellContent Route="addChip" ContentTemplate="{DataTemplate views:AddChipPanel}" />
+        </Tab>
+        <Tab Title="User" Icon="tabbed_user.png">
+            <ShellContent Route="user" ContentTemplate="{DataTemplate views:UserPanel}" />
+        </Tab>
+    </TabBar>
+</Shell>

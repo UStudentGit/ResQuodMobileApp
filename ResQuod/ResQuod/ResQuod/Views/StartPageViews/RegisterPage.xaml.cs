@@ -1,4 +1,5 @@
 ﻿using ResQuod.Controllers;
+using ResQuod.Helpers;
 using ResQuod.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,8 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ResQuod
+namespace ResQuod.Views.StartPageViews
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
         public RegisterPage()
@@ -19,14 +19,9 @@ namespace ResQuod
             InitializeComponent();
         }
 
-        private void OpenLoginPage(object sender, EventArgs e)
+        private async void OnRegisterClick(object sender, EventArgs e)
         {
-            App.Current.MainPage = new LoginPage();
-        }
-
-        private async void TryRegister(object sender, EventArgs e)
-        {
-            if (!InputDataCorrect())
+            if (!ValidateInput())
                 return;
 
             //Send request to database
@@ -46,67 +41,59 @@ namespace ResQuod
             }
             else
             {
-                await DisplayAlert(title: "Success", message: "Account succesfully created!", cancel: "Ok");
-                App.Current.MainPage = new LoginPage();
+                await DisplayAlert(title: "Success", message: "Account succesfully created! You can log in now", cancel: "Ok");
+                //App.Current.MainPage = new LoginPage();
             }           
         }
 
-        private bool InputDataCorrect()
+        private bool ValidateInput()
         {
             //Check name
             if (String.IsNullOrEmpty(NameInput.Text) || NameInput.Text.Length < 3)
             {
-                NameErrorLabel.Text = "At least 3 characters equired";
+                NameErrorLabel.Text = ValidationMessages.NameMin;
+                NameErrorLabel.IsVisible = true;
                 return false;
             }
-            NameErrorLabel.Text = "";
+            NameErrorLabel.IsVisible = false;
 
             //Check surname
             if (String.IsNullOrEmpty(SurnameInput.Text) || SurnameInput.Text.Length<3)
             {
-                SurnameErrorLabel.Text = "At least 3 characters equired";
+                SurnameErrorLabel.Text = ValidationMessages.NameMin;
+                SurnameErrorLabel.IsVisible = true;
                 return false;
             }
-            SurnameErrorLabel.Text = "";
+            SurnameErrorLabel.IsVisible = false;
 
             //Check email
-            if (!IsValidEmail(EmailInput.Text))
+            if (!FormDataHelper.IsEmailValid(EmailInput.Text))
             {
-                EmailErrorLabel.Text = "Incorrect email";
+                EmailErrorLabel.Text = ValidationMessages.IncorrectEmail;
+                EmailErrorLabel.IsVisible = true;
                 return false;
             }
-            EmailErrorLabel.Text = "";
+            EmailErrorLabel.IsVisible = false;
 
             //Check password
             if (String.IsNullOrEmpty(PasswordInput.Text) || PasswordInput.Text.Length < 6)
             {
-                PasswordErrorLabel.Text = "At least 6 characters equired";
+                PasswordErrorLabel.Text = ValidationMessages.PasswordMin;
+                PasswordErrorLabel.IsVisible = true;
                 return false;
             }
-            PasswordErrorLabel.Text = "";
+            PasswordErrorLabel.IsVisible = false;
 
             //Check passwords equality
             if (String.IsNullOrEmpty(PasswordInput.Text) || !ConfirmPasswordInput.Text.Equals(PasswordInput.Text))
             {
-                ConfirmPasswordErrorLabel.Text = "Password aren't equal";
+                ConfirmPasswordErrorLabel.Text = ValidationMessages.PasswordsNotEqual;
+                ConfirmPasswordErrorLabel.IsVisible = true;
                 return false;
             }
-            ConfirmPasswordErrorLabel.Text = "";
+            ConfirmPasswordErrorLabel.IsVisible = false;
 
             return true;
-        }
-
-        bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

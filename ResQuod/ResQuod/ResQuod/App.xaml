@@ -6,6 +6,84 @@
              mc:Ignorable="d"
              x:Class="ResQuod.App">
     <Application.Resources>
+        <ResourceDictionary>
+            
+            <!--Colors-->
 
+            <!--Shell-->
+            <Style x:Key="ShellBaseStyle" TargetType="Element">
+                <Setter Property="Shell.TabBarBackgroundColor" Value="#3949AB" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#9CA4D5" />
+                <Setter Property="Shell.TabBarTitleColor" Value="White" />
+                <Setter Property="Shell.NavBarIsVisible" Value="False" />
+            </Style>
+
+            <!--Buttons-->
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Padding" Value="16, 4" />
+            </Style>
+            <Style Class="Primary" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#3949AB" />
+            </Style>
+            <Style Class="Success" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#007457" />
+                <Setter Property="TextColor" Value="#FFF" />
+            </Style>
+            <Style Class="Gray" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Gray" />
+                <Setter Property="TextColor" Value="#FFF" />
+            </Style>
+            <Style Class="Large" TargetType="Button">
+                <Setter Property="Padding" Value="20, 8" />
+            </Style>
+            
+            <!--Inputs-->
+            <Style TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="Gray" />
+                <Setter Property="HeightRequest" Value="56" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            
+            <!--Labels-->
+            <Style Class="InputError" TargetType="Label">
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="Text" Value="" />
+                <Setter Property="Margin" Value="5, -5, 5, 5" />
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
+            
+            <!--Headings-->
+            <Style Class="Heading1" TargetType="Label">
+                <Setter Property="FontSize" Value="Title" />
+                <Setter Property="LineHeight" Value="32" />
+                <Setter Property="Margin" Value="0, 30" />
+                <Setter Property="TextColor" Value="#000" />
+            </Style>
+            <Style Class="Heading2" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="LineHeight" Value="26" />
+                <Setter Property="TextColor" Value="#000" />
+            </Style>
+            
+            <!--Alerts-->
+            <Style Class="AlertSuccess" TargetType="Label">
+                <Setter Property="BackgroundColor" Value="#007457" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="TextColor" Value="#FFF" />
+                <Setter Property="Margin" Value="0, 15" />
+            </Style>
+            <Style Class="AlertError" TargetType="Label">
+                <Setter Property="BackgroundColor" Value="#B00020" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="TextColor" Value="#FFF" />
+                <Setter Property="Margin" Value="0, 15" />
+            </Style>
+
+            <Style Class="Container" TargetType="StackLayout">
+                <Setter Property="Padding" Value="15"/>
+            </Style>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

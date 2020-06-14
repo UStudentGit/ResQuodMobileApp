@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ResQuod
+namespace ResQuod.Helpers
 {
-    class FormDataHelper
+    public static class FormDataHelper
     {
         public static bool IsEmailValid(string email)
         {

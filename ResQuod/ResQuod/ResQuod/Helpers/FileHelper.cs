@@ -22,6 +22,18 @@ namespace ResQuod.Helpers
             }
         }
 
+        public static void ClearFile(string fileName)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string filePath = Path.Combine(path, fileName);
+
+            using (var file = File.Open(filePath, FileMode.Create, FileAccess.Write))
+            using (var strm = new StreamWriter(file))
+            {
+                strm.Write(string.Empty);
+            }
+        }
+
         public static T ReadObjectFromFile<T>(string fileName)
         {
             string json;
