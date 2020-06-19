@@ -111,6 +111,7 @@ namespace ResQuod.Controllers
 
         public static async Task<Tuple<Response, string>> Logout()
         {
+            // TODO
             if (!InternetController.IsInternetActive())
                 return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
 
@@ -199,7 +200,7 @@ namespace ResQuod.Controllers
             if (!InternetController.IsInternetActive())
                 return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
 
-            var uri = new Uri(string.Format(Constants.API_UserPatchUrl, string.Empty));
+            var uri = new Uri(Constants.API_UserPatchUrl);
 
             var json = JsonConvert.SerializeObject(item);
             var method = new HttpMethod("PATCH");

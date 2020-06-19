@@ -1,4 +1,5 @@
 ﻿using ResQuod.Controllers;
+using ResQuod.Helpers;
 using ResQuod.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace ResQuod
+namespace ResQuod.Views.StartPageViews
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
@@ -28,19 +29,14 @@ namespace ResQuod
             }
         }
 
-        private void OpenRegisterPage(object sender, EventArgs e)
-        {
-            App.Current.MainPage = new RegisterPage();
-        }
-
-        private async void TryLogin(object sender, EventArgs e)
+        private async void OnLoginClick(object sender, EventArgs e)
         {
             await LogIn(Email.Text, Password.Text);
         }
 
         private async Task LogIn(string email, string password)
         {
-            if (!IsInputDataCorrect())
+            if (!ValidateInput())
                 return;
 
             //Send request to database
@@ -65,38 +61,53 @@ namespace ResQuod
             }
             else
             {
-                var user = getUser_response.Item3;
-                string nick = user.Name + " " + user.Surname;
-                string useremail = user.Email;
-                await DisplayAlert(title: "Success", message: "Welcome back " + nick + "!", cancel: "Continue");
-                Preferences.Set("UserNick", nick);
-                Preferences.Set("UserEmail", useremail);
+                SaveUserData(getUser_response.Item3);
                 SessionController.SaveUserData(new UserSessionData() { Email = Email.Text, Password = Password.Text });
-                App.Current.MainPage = new MainPage();
+                
+                if (Shell.Current == null)
+                {
+                    //zasadniczo nie powinno sie wydarzyc
+                    App.Current.MainPage = new AppShell();
+                }
+                else
+                {
+                    // przechodzimy do poprzedniego routa, 
+                    // bo wejscie na startPage jest mozliwe jako relatywne,
+                    // czyli tutaj aktualna sciezka powinna byc zawsze w style
+                    // {costam}/startPage
+                    await Shell.Current.GoToAsync("..");
+                }
             }
         }
 
-        private bool IsInputDataCorrect()
+        private bool ValidateInput()
         {
             //Check email
             if (!FormDataHelper.IsEmailValid(Email.Text))
             {
-                EmailErrorLabel.Text = "Incorrect email";
+                EmailErrorLabel.Text = ValidationMessages.IncorrectEmail;
+                EmailErrorLabel.IsVisible = true;
                 return false;
             }
-            EmailErrorLabel.Text = "";
+            EmailErrorLabel.IsVisible = false;
 
             //Check password
             if (String.IsNullOrEmpty(Password.Text) || Password.Text.Length < 6)
             {
-                PasswordErrorLabel.Text = "At least 6 characters equired";
+                PasswordErrorLabel.Text = ValidationMessages.PasswordMin;
+                PasswordErrorLabel.IsVisible = true;
                 return false;
             }
-            PasswordErrorLabel.Text = "";
+            PasswordErrorLabel.IsVisible = false;
 
             return true;
         }
 
-        
+        private void SaveUserData(User user)
+        {
+            Preferences.Set("UserName", user.Name);
+            Preferences.Set("UserSurname", user.Surname);
+            Preferences.Set("UserEmail", user.Email);
+        }
     }
 }

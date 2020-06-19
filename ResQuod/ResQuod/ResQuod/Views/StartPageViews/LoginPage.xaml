@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ResQuod.Views.StartPageViews.LoginPage">
+    <StackLayout>
+        <StackLayout x:Name="TopLayout"  Spacing="0">
+            <StackLayout Padding="0,30" BackgroundColor="Gray">
+                <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="180" HeightRequest="180"/>
+            </StackLayout>
+            
+            <ScrollView Orientation="Vertical">
+                <StackLayout Padding="30">
+                    <Entry x:Name="Email" Keyboard="Email" Placeholder="Email"/>
+                    <Label x:Name="EmailErrorLabel" StyleClass="InputError" />
+                    
+                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" />
+                    <Label x:Name="PasswordErrorLabel" StyleClass="InputError"/>
+                    
+                    <Button Clicked="OnLoginClick" Text="Log in" Margin="0, 30" StyleClass="Large, Success"/>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>

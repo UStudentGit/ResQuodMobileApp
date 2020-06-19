@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ResQuod.Views.MainViews.UserPanel"
+             Title="Account details">
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical">
+            <StackLayout StyleClass="Container">
+
+                <!--header-->
+                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                    <StackLayout>
+                        <Label x:Name="Nick" StyleClass="Heading2" />
+                        <Label x:Name="Email" Text="" FontSize="12" TextColor="black" />
+                    </StackLayout>
+                    <ImageButton Source="ic_exit_to_app_black_48dp.png" BackgroundColor="Transparent" HeightRequest="42" Opacity="0.5"
+                                 HorizontalOptions="Center" VerticalOptions="Center" Padding="4"
+                                 Clicked="OnLogoutButtonClicked"/>
+                </FlexLayout>
+
+                <!--error messages-->
+                <Label x:Name="LabelErrorAlert" StyleClass="AlertError"
+                       IsVisible="False" />
+                <Label x:Name="LabelSuccessAlert" StyleClass="AlertSuccess"
+                       IsVisible="False" />
+
+                <!--form-->
+                <StackLayout x:Name="PatchForm">
+                    <Label StyleClass="Heading1" Text="Your data" />
+
+                    <Entry x:Name="NameInput" Placeholder="Change name" />
+                    <Label x:Name="NameErrorLabel" Text="" StyleClass="InputError" />
+
+                    <Entry x:Name="SurnameInput" Placeholder="Change surname" />
+                    <Label x:Name="SurnameErrorLabel" Text="" StyleClass="InputError" />
+
+                    <Entry x:Name="EmailInput" Keyboard="Email" Placeholder="Change email" />
+                    <Label x:Name="EmailErrorLabel" Text="" StyleClass="InputError" />
+
+                    <Entry x:Name="PasswordInput" Placeholder="Password" IsPassword="True" />
+                    <Label x:Name="PasswordErrorLabel" Text="" StyleClass="InputError" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Clicked="OnCancelPatchButtonClicked" Grid.Column="0" 
+                                Text="Cancel" StyleClass="Gray" />
+                        <Button Clicked="OnConfirmPatchButtonClicked" Grid.Column="1" 
+                                Text="Save changes" StyleClass="Primary" />
+                    </Grid>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

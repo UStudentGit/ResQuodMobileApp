@@ -10,10 +10,9 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ResQuod
+namespace ResQuod.Views.MainViews
 {
-    //[XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePanel : ContentView
+    public partial class HomePanel : ContentPage
     {
         public HomePanel()
         {

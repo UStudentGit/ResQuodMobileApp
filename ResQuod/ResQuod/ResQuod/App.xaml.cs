@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ResQuod.Controllers;
+using ResQuod.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,8 +11,12 @@ namespace ResQuod
         public App()
         {
             InitializeComponent();
+            MainPage = new AppShell();
 
-            MainPage = new LoginPage();
+            if (!SessionController.IsLogged)
+            {
+                Shell.Current.GoToAsync("startPage");
+            }
         }
 
         protected override void OnStart()

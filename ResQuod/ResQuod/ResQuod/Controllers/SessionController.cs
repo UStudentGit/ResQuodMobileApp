@@ -8,7 +8,14 @@ namespace ResQuod.Controllers
 {
     public static class SessionController
     {
-        private static string userFile = "userSession";
+        private static readonly string userFile = "userSession";
+        private static UserSessionData cachedData = null;
+        private static bool wasRead = false;
+
+        public static bool IsLogged
+        {
+            get => GetUserData() != null;
+        }
 
         public static void SaveUserData(UserSessionData user)
         {
@@ -17,9 +24,20 @@ namespace ResQuod.Controllers
 
         public static UserSessionData GetUserData()
         {
-            var user = FileHelper.ReadObjectFromFile<UserSessionData>(userFile);
-            return user;
+            if (cachedData == null && !wasRead)
+            {
+                cachedData = FileHelper.ReadObjectFromFile<UserSessionData>(userFile);
+                wasRead = true;
+            }
 
+            return cachedData;
+        }
+
+        public static void ClearUserData()
+        {
+            FileHelper.ClearFile(userFile);
+            cachedData = null;
+            wasRead = false;
         }
     }
 }

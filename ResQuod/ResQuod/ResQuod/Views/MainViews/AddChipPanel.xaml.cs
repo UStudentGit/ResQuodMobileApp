@@ -9,17 +9,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ResQuod.Main_Page_Views
+namespace ResQuod.Views.MainViews
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddChipPanel : ContentView
+    public partial class AddChipPanel : ContentPage
     {
         public AddChipPanel()
         {
             InitializeComponent();
-            StopAll();
             InitGUI();
-
         }
 
         private void InitGUI()

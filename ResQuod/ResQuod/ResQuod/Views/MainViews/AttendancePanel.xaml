@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ResQuod.AttendancePanel">
-    
-  <ContentView.Content>
-      <StackLayout VerticalOptions="Center" >            
+             x:Class="ResQuod.Views.MainViews.AttendancePanel"
+             Title="Attend event">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center" StyleClass="Container">            
             <StackLayout HorizontalOptions="Center">
                 <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
@@ -19,5 +19,5 @@
                 <Label x:Name="Logs"></Label>
             </StackLayout>
       </StackLayout>
-  </ContentView.Content>
-</ContentView>
+  </ContentPage.Content>
+</ContentPage>
