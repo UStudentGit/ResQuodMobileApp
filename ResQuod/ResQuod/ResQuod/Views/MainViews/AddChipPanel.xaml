@@ -7,23 +7,25 @@
              x:Class="ResQuod.Views.MainViews.AddChipPanel"
              Title="Program new chip">
   <ContentPage.Content>
-        <StackLayout StyleClass="Container">
-            <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" Margin="20,20,20,0" Text="Select the position to which you want to assign the code:"></Label>
-            <StackLayout Margin="0,20,0,0" HorizontalOptions="Center" VerticalOptions="Start">
-                <ScrollView Orientation="Horizontal" Margin="20,0,20,50">
-                    <StackLayout Orientation="Horizontal" x:Name="EmptyRooms">
-                    </StackLayout>
-                </ScrollView>
-                <Label x:Name="Room_Label" Text="" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
+        <ScrollView>
+            <StackLayout StyleClass="Container">
+                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" Margin="20,20,20,0" Text="Select the position to which you want to assign the code:"></Label>
+                <StackLayout Margin="0,20,0,0" HorizontalOptions="Center" VerticalOptions="Start">
+                    <ScrollView Orientation="Horizontal" Margin="20,0,20,50">
+                        <StackLayout Orientation="Horizontal" x:Name="EmptyRooms">
+                        </StackLayout>
+                    </ScrollView>
+                    <Label x:Name="Room_Label" Text="" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center">
+                    <Button x:Name="StartWriting_Button" BackgroundColor="White" Margin="0,0,0,20" BorderColor="Black" Text="Assign Tag to position" Clicked="StartWriting" IsEnabled="False"></Button>
+                    <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>
+                    <Image x:Name="ImageWait" Source="Scanning_wait.png" IsVisible="True" WidthRequest="200" HeightRequest="200"></Image>
+                    <Image x:Name="ImageOk" Source="Scanning_ok.png" IsVisible="False" WidthRequest="200" HeightRequest="200"></Image>
+                </StackLayout>
             </StackLayout>
-            <StackLayout HorizontalOptions="Center">
-                <Button x:Name="StartWriting_Button" BackgroundColor="White" Margin="0,0,0,20" BorderColor="Black" Text="Assign Tag to position" Clicked="StartWriting" IsEnabled="False"></Button>
-                <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>
-                <Image x:Name="ImageWait" Source="Scanning_wait.png" IsVisible="True" WidthRequest="200" HeightRequest="200"></Image>
-                <Image x:Name="ImageOk" Source="Scanning_ok.png" IsVisible="False" WidthRequest="200" HeightRequest="200"></Image>
-            </StackLayout>
-        </StackLayout>
-  </ContentPage.Content>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

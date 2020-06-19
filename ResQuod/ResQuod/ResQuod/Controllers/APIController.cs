@@ -232,5 +232,44 @@ namespace ResQuod.Controllers
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.UnknowError, error.Message);
         }
+
+        /// NFC 
+        /// 
+        public static async Task<Tuple<Response, string, RoomPosition[]>> GetPositionsWithoutTag()
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection", new RoomPosition[0]);
+
+            var uri = new Uri(string.Format(Constants.API_GetNullTagPositions, string.Empty));
+
+            var json = JsonConvert.SerializeObject("");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage response = await client.GetAsync(uri);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem", new RoomPosition[0]);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message, new RoomPosition[0]);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var positions = JsonConvert.DeserializeObject<RoomPosition[]>(_data);
+                return Tuple.Create(Response.Success, "Succesfully created", positions);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.UnknowError, error.Message, new RoomPosition[0]);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Plugin.NFC;
+using ResQuod.Controllers;
 using ResQuod.Models;
 using System;
 using System.Collections.Generic;
@@ -64,8 +65,9 @@ namespace ResQuod.Views.MainViews
 
         private async void LoadPositions()
         {
-            //Tuple<APIController.Response, string, RoomPosition[]> result = await APIController.GetPositionsWithoutTag();
-            //positions = result.Item3.ToList();
+            Tuple<APIController.Response, string, RoomPosition[]> result = await APIController.GetPositionsWithoutTag();
+            await DisplayAlert(title: result.Item1.ToString(), message: result.Item2.ToString(), cancel: "Continue");
+            positions = result.Item3.ToList();
         }
 
         private void StartWriting(object sender, EventArgs e)

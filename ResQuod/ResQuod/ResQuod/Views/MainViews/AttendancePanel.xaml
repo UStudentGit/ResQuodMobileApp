@@ -7,17 +7,19 @@
              x:Class="ResQuod.Views.MainViews.AttendancePanel"
              Title="Attend event">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" StyleClass="Container">            
-            <StackLayout HorizontalOptions="Center">
-                <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>
-                <Image x:Name="ImageWait" Source="Scanning_wait.png" IsVisible="True" WidthRequest="200" HeightRequest="200"></Image>
-                <Image x:Name="ImageOk" Source="Scanning_ok.png" IsVisible="False" WidthRequest="200" HeightRequest="200"></Image>
-                <Label x:Name="TagId_Label" Text="" Margin="0,50,0,0" HorizontalTextAlignment="Center"></Label>
-                <Button x:Name="Check_Button" TextColor="White" Text="Report presence" Padding="15" Clicked="Check_Button_Clicked" IsEnabled="False"></Button>
-                <Label x:Name="Logs"></Label>
+        <ScrollView>
+            <StackLayout VerticalOptions="Center" StyleClass="Container">            
+                <StackLayout HorizontalOptions="Center">
+                    <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>
+                    <Image x:Name="ImageWait" Source="Scanning_wait.png" IsVisible="True" WidthRequest="200" HeightRequest="200"></Image>
+                    <Image x:Name="ImageOk" Source="Scanning_ok.png" IsVisible="False" WidthRequest="200" HeightRequest="200"></Image>
+                    <Label x:Name="TagId_Label" Text="" Margin="0,50,0,0" HorizontalTextAlignment="Center"></Label>
+                    <Button x:Name="Check_Button" TextColor="White" Text="Report presence" Padding="15" Clicked="Check_Button_Clicked" IsEnabled="False"></Button>
+                    <Label x:Name="Logs"></Label>
+                </StackLayout>
             </StackLayout>
-      </StackLayout>
-  </ContentPage.Content>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

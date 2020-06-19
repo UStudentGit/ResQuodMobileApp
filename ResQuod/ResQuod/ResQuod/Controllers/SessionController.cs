@@ -12,7 +12,7 @@ namespace ResQuod.Controllers
         private static UserSessionData cachedData = null;
         private static bool wasRead = false;
 
-        public static bool IsLogged
+        public static bool IsSaved
         {
             get => GetUserData() != null;
         }

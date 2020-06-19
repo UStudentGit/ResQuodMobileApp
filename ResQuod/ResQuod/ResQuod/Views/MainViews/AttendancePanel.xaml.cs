@@ -80,6 +80,7 @@ namespace ResQuod.Views.MainViews
                     {
                         // TODO: jak chodzi o zmianę strony to Shell.Current.GoToAsync
                         //parent.CurrentPage = parent.Children[nextChildIndex];
+                        Shell.Current.GoToAsync("//events");
                     });
 
                 });

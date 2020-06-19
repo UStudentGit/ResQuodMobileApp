@@ -1,8 +1,10 @@
 ﻿using ResQuod.Controllers;
+using ResQuod.Models;
 using ResQuod.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static ResQuod.Controllers.APIController;
 
 namespace ResQuod
 {
@@ -12,11 +14,28 @@ namespace ResQuod
         {
             InitializeComponent();
             MainPage = new AppShell();
+            TryLogin();
+            
+        }
 
-            if (!SessionController.IsLogged)
+        private async void TryLogin()
+        {
+            if (SessionController.IsSaved)
             {
-                Shell.Current.GoToAsync("startPage");
+                var sessionData = SessionController.GetUserData();
+                var userData = new LoginModel() { Email = sessionData.Email, Password = sessionData.Password };
+                Tuple<Response, string> response = await APIController.Login(userData);
+
+                if (response.Item1 == Response.Success)
+                {
+                    //Stay on main panel page
+                    return;
+                }
             }
+
+            //Open login panel
+            await Shell.Current.GoToAsync("startPage");
+                      
         }
 
         protected override void OnStart()

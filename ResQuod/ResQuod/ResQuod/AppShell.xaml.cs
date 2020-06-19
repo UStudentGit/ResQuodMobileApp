@@ -2,6 +2,7 @@
 using ResQuod.Views.MainViews;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace ResQuod
 {
     public partial class AppShell : Shell
     {
+        string attendanceRoute = "//attendence";
         public AppShell()
         {
             InitializeComponent();
@@ -30,6 +32,20 @@ namespace ResQuod
             {
                 e.Cancel();
             }
+           // if (e.Source == ShellNavigationSource.ShellSectionChanged)
+                //DisplayAlert(title: "Success", message: Shell.Current.CurrentState.Location.ToString(), cancel: "Continue");
+
+            if (e.Source == ShellNavigationSource.ShellSectionChanged && e.Target.Location.ToString() == attendanceRoute)
+            {
+                StartNFC();                
+            }
+
         }
+
+        private void StartNFC()
+        {
+            DisplayAlert(title: "Success", message: "Uruchamiam NFC", cancel: "Continue");
+        }
+
     }
 }
