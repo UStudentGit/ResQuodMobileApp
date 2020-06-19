@@ -10,7 +10,6 @@ namespace ResQuod
     //https://github.com/franckbour/Plugin.NFC
     static class NFCController
     {
-
         public static bool IsAvailable {
             get {
                 return CrossNFC.IsSupported && CrossNFC.Current.IsAvailable;
@@ -25,33 +24,59 @@ namespace ResQuod
             }
         }
 
+        public static bool IsListening { get; private set; }
+
         private static string currentMessage;
         private static NdefMessageReceivedEventHandler messageReceived;
         private static NdefMessagePublishedEventHandler messagePublished;
         private static TagDiscoveredEventHandler tagDiscovered;
 
         //Local handlers
-        private static OnMessageReceived OnMessageReceivedHandler;
+        private static List<OnMessageReceived> OnMessageReceivedHandler = new List<OnMessageReceived>();
         private static OnMessagePublished OnMessagePublishedHandler;
 
         public delegate void OnMessageReceived(NFCTag tag);
         public delegate void OnMessagePublished(NFCTag tag);
 
-
-        public static void StartListening(OnMessageReceived MessageReceivedHandler)
+        public static void StartListening()
         {
-            //Clear all
-            StopAll();
+            if (!(OnMessageReceivedHandler.Count > 1) || !IsListening)
+            {
+                //Start NFC
+                CrossNFC.Current.StartListening();
+
+                //Local Handlers
+                messageReceived = MessageReceived;
+                CrossNFC.Current.OnMessageReceived += messageReceived;
+                IsListening = true;
+            }
+        }
+
+        public static void StartListening(OnMessageReceived MessageReceivedHandler, bool additional = false)
+        {
+            if (!additional)
+            {
+                //Clear all
+                StopAll();
+                OnMessageReceivedHandler.Clear();
+            }
+            
 
             //Start NFC
             CrossNFC.Current.StartListening();
 
             //Handler
-            OnMessageReceivedHandler = MessageReceivedHandler;
+            if(!OnMessageReceivedHandler.Contains(MessageReceivedHandler))
+                OnMessageReceivedHandler.Add(MessageReceivedHandler);
 
             //Local Handlers
             messageReceived = MessageReceived;
-            CrossNFC.Current.OnMessageReceived += messageReceived;
+
+            if (!(OnMessageReceivedHandler.Count > 1) || !IsListening)
+            {
+                CrossNFC.Current.OnMessageReceived += messageReceived;
+                IsListening = true;
+            }
         }
 
         public static void StopAll()
@@ -69,6 +94,8 @@ namespace ResQuod
 
                 CrossNFC.Current.StopListening();
                 CrossNFC.Current.StopPublishing();
+
+                IsListening = false;
             }
             catch(Exception ex)
             {
@@ -130,13 +157,7 @@ namespace ResQuod
             {
                 foreach (NFCNdefRecord record in tagInfo.Records)
                 {
-                    // message += Encoding.ASCII.GetString(record.Payload).ToString() + ",\n";
                     message += record.Message != null ? record.Message.ToString() : " ";
-                    //message += record.MimeType != null ? record.MimeType.ToString() + ",\n" : "-\n";
-                    //message += record.TypeFormat.ToString() + ",\n";
-                    //message += record.Uri != null ? record.Uri.ToString() + ",\n" : "-\n";
-                    //message += record.ExternalDomain != null ? record.ExternalDomain.ToString()    + ",\n" : "-\n";
-                    //message += record.ExternalType != null ? record.ExternalType.ToString() + ",\n" : "-\n";
                 }
             }
             var tag = new NFCTag()
@@ -144,7 +165,8 @@ namespace ResQuod
                 TagId = id,
                 MeetingCode = message
             };
-            OnMessageReceivedHandler(tag);
+            foreach (var handler in OnMessageReceivedHandler)
+                handler(tag);
         }
 
         private static void MessagePublished(ITagInfo tagInfo)

@@ -78,6 +78,7 @@ namespace ResQuod.Views.MainViews
             //Application.Current.MainPage.DisplayAlert("Success", "Succesfully assigned tag " + tag.TagId + " to " + currentPosition.RoomName + "/" + currentPosition.PositionNumber, "Ok");
             currentPosition = null;
             GeneratePickerElements();
+            NFCController.StartListening();
         }
 
         public void StopAll()

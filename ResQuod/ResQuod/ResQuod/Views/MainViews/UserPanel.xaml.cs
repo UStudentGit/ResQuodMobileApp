@@ -56,6 +56,7 @@ namespace ResQuod.Views.MainViews
             // wiec nie mozna go ustawic jako absolutnej sciezki, wiec
             // po tej akcji ponizej aktualna lokalizacja bedzie taka: {aktualna_sciezka}/startPage
             await Shell.Current.GoToAsync("startPage");
+            NFCController.StopAll();
         }
 
         private void OnCancelPatchButtonClicked(object sender, EventArgs args)

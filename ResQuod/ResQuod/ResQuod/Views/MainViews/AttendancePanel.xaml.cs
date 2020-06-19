@@ -34,9 +34,12 @@ namespace ResQuod.Views.MainViews
             if (NFCController.IsEnabled)
             {
                 Title_Label.TextColor = Color.Green;
-                NFCController.StartListening(OnMessageReceived);
+                NFCController.StartListening(OnMessageReceived, true);
             }
-                
+
+            ImageWait.IsVisible = true;
+            ImageOk.IsVisible = false;
+            Check_Button.IsEnabled = false;
         }
 
         private void OnMessageReceived(NFCTag tag)
@@ -56,7 +59,7 @@ namespace ResQuod.Views.MainViews
         public async Task StartAgain()
         {
             await Task.Delay(100);
-            NFCController.StartListening(OnMessageReceived);
+            NFCController.StartListening(OnMessageReceived, true);
         }
 
         public void StopNFC()
@@ -74,13 +77,15 @@ namespace ResQuod.Views.MainViews
                 await Application.Current.MainPage.DisplayAlert(response.Item1.ToString(), response.Item2 + "\nEvent: " + eventResponse.EventName , "Ok");
                 await Task.Run(async () =>
                 {
-                    var nextChildIndex = 2;
                     await Task.Delay(300);
-                    Device.BeginInvokeOnMainThread(() =>
+                    Device.BeginInvokeOnMainThread(async () =>
                     {
+                        
                         // TODO: jak chodzi o zmianę strony to Shell.Current.GoToAsync
                         //parent.CurrentPage = parent.Children[nextChildIndex];
-                        Shell.Current.GoToAsync("//events");
+                        await Shell.Current.GoToAsync("//events");
+                        StartNFCListening();
+
                     });
 
                 });

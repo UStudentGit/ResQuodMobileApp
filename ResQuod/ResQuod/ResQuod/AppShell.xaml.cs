@@ -1,4 +1,5 @@
-﻿using ResQuod.Views;
+﻿using ResQuod.Models;
+using ResQuod.Views;
 using ResQuod.Views.MainViews;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace ResQuod
     public partial class AppShell : Shell
     {
         string attendanceRoute = "//attendence";
+        static bool nfcRedirecting = false;
         public AppShell()
         {
             InitializeComponent();
@@ -23,8 +25,6 @@ namespace ResQuod
 
         private void OnNavigating(object sender, ShellNavigatingEventArgs e)
         {
-            NFCController.StopAll();
-
             // hax: disable back button on start page
             //TODO: make dependency service that will kill app
             //reflink: https://stackoverflow.com/questions/29257929/how-to-terminate-a-xamarin-application
@@ -32,19 +32,25 @@ namespace ResQuod
             {
                 e.Cancel();
             }
-           // if (e.Source == ShellNavigationSource.ShellSectionChanged)
-                //DisplayAlert(title: "Success", message: Shell.Current.CurrentState.Location.ToString(), cancel: "Continue");
 
-            if (e.Source == ShellNavigationSource.ShellSectionChanged && e.Target.Location.ToString() == attendanceRoute)
+            
+            if ((e.Source == ShellNavigationSource.ShellSectionChanged || e.Source == ShellNavigationSource.Unknown ) && e.Target.Location.ToString() != attendanceRoute && nfcRedirecting)
             {
-                StartNFC();                
+                NFCController.StartListening(OnMessageReceived, true);
             }
 
         }
 
-        private void StartNFC()
+        private static void OnMessageReceived(NFCTag tag)
         {
-            DisplayAlert(title: "Success", message: "Uruchamiam NFC", cancel: "Continue");
+            Shell.Current.GoToAsync("//attendence");
+        }
+
+        public static async void StartNFCRedirecting()
+        {
+            nfcRedirecting = true;
+            await Task.Delay(100);
+            NFCController.StartListening(OnMessageReceived, true);
         }
 
     }
