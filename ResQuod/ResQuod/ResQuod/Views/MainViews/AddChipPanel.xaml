@@ -8,17 +8,13 @@
              Title="Program new chip">
   <ContentPage.Content>
         <ScrollView>
-            <StackLayout StyleClass="Container">
-                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" Margin="20,20,20,0" Text="Select the position to which you want to assign the code:"></Label>
-                <StackLayout Margin="0,20,0,0" HorizontalOptions="Center" VerticalOptions="Start">
-                    <ScrollView Orientation="Horizontal" Margin="20,0,20,50">
-                        <StackLayout Orientation="Horizontal" x:Name="EmptyRooms">
-                        </StackLayout>
-                    </ScrollView>
-                    <Label x:Name="Room_Label" Text="" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center">
-                    <Button x:Name="StartWriting_Button" BackgroundColor="White" Margin="0,0,0,20" BorderColor="Black" Text="Assign Tag to position" Clicked="StartWriting" IsEnabled="False"></Button>
+            <StackLayout StyleClass="Container" Padding="50">               
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Start">
+                    <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" Margin="20,20,20,0" Text="Select the position to which you want to assign the code:"></Label>
+                    <Picker x:Name="PositionPicker" Title="Select position"  IsEnabled="False" SelectedIndexChanged="PositionPicker_SelectedIndexChanged" >
+                    </Picker>
+                   
+                    <Button x:Name="StartWriting_Button" BackgroundColor="White" Margin="0,50,0,20" BorderColor="Black" Text="Assign Tag to position" Clicked="StartWriting" IsEnabled="False"></Button>
                     <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
                     <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
                     <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>

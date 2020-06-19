@@ -3,6 +3,7 @@ using ResQuod.Controllers;
 using ResQuod.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace ResQuod.Views.MainViews
         {
             InitializeComponent();
             InitGUI();
-            CreateButtons();
+            GeneratePickerElements();
 
         }
 
@@ -43,31 +44,16 @@ namespace ResQuod.Views.MainViews
 
         }
 
-        private void CreateButtons()
+        private async void GeneratePickerElements()
         {
-            LoadPositions();
-            EmptyRooms.Children.Clear();
-            foreach (var pos in positions)
-            {
-                var position = pos;
-                var button = new Button
-                {
-                    Text = pos.RoomName + "\n" + pos.PositionNumber,
-                    CornerRadius = 0,
-                    Margin = 0,
-                    Command = new Command(() => {
-                        ChooseRoom(position);
-                    })
-                };
-                EmptyRooms.Children.Add(button);
-            }
-        }
-
-        private async void LoadPositions()
-        {
+            PositionPicker.Items.Clear();
+            PositionPicker.IsEnabled = true;
             Tuple<APIController.Response, string, RoomPosition[]> result = await APIController.GetPositionsWithoutTag();
-            await DisplayAlert(title: result.Item1.ToString(), message: result.Item2.ToString(), cancel: "Continue");
-            positions = result.Item3.ToList();
+            var posList = result.Item3.ToList();
+            positions = posList;
+            var positionsStrings = posList.Select(p => p.RoomName.ToString() + "/" + p.PositionNumber.ToString()).ToList();
+            foreach (var pos in positionsStrings)
+                PositionPicker.Items.Add(pos);
         }
 
         private void StartWriting(object sender, EventArgs e)
@@ -89,11 +75,9 @@ namespace ResQuod.Views.MainViews
             //EventId_Label.Text = tag.MeetingCode;
             NFCController.StopAll();
 
-            positions.Remove(currentPosition);
-            Room_Label.Text = "";
-            Application.Current.MainPage.DisplayAlert("Success", "Succesfully assigned tag " + tag.TagId + " to " + currentPosition.RoomName + "/" + currentPosition.PositionNumber, "Ok");
+            //Application.Current.MainPage.DisplayAlert("Success", "Succesfully assigned tag " + tag.TagId + " to " + currentPosition.RoomName + "/" + currentPosition.PositionNumber, "Ok");
             currentPosition = null;
-            CreateButtons();
+            GeneratePickerElements();
         }
 
         public void StopAll()
@@ -101,23 +85,20 @@ namespace ResQuod.Views.MainViews
             NFCController.StopAll();
         }
 
-        private void ChooseRoom(RoomPosition position)
+        private void LockButtons()
         {
-            currentPosition = position;
-            Room_Label.Text = "Choosen " + position.RoomName + "/" + position.PositionNumber;
+            PositionPicker.IsEnabled = false;
+        }
+
+        private void PositionPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!PositionPicker.IsEnabled)
+                return;
+            currentPosition = positions[PositionPicker.SelectedIndex];
             StartWriting_Button.BackgroundColor = Color.FromHex("008B8B");
             StartWriting_Button.IsEnabled = NFCController.IsEnabled;
             ImageWait.IsVisible = true;
             ImageOk.IsVisible = false;
         }
-
-        private void LockButtons()
-        {
-            foreach (var child in EmptyRooms.Children)
-                child.IsEnabled = false;
-        }
-
-
-
     }
 }

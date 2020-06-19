@@ -264,7 +264,7 @@ namespace ResQuod.Controllers
             {
                 var _data = await response.Content.ReadAsStringAsync();
                 var positions = JsonConvert.DeserializeObject<RoomPosition[]>(_data);
-                return Tuple.Create(Response.Success, "Succesfully created", positions);
+                return Tuple.Create(Response.Success, "Succesfully downloaded", positions);
             }
 
             var data = await response.Content.ReadAsStringAsync();
