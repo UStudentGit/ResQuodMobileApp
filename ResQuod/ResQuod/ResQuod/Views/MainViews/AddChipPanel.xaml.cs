@@ -13,10 +13,15 @@ namespace ResQuod.Views.MainViews
 {
     public partial class AddChipPanel : ContentPage
     {
+        private List<RoomPosition> positions = new List<RoomPosition>();
+        private RoomPosition currentPosition;
+
         public AddChipPanel()
         {
             InitializeComponent();
             InitGUI();
+            CreateButtons();
+
         }
 
         private void InitGUI()
@@ -32,31 +37,84 @@ namespace ResQuod.Views.MainViews
             }
             else
             {
-                Start.IsEnabled = false;
+                //Start.IsEnabled = false;
             }
 
+        }
+
+        private void CreateButtons()
+        {
+            LoadPositions();
+            EmptyRooms.Children.Clear();
+            foreach (var pos in positions)
+            {
+                var position = pos;
+                var button = new Button
+                {
+                    Text = pos.RoomName + "\n" + pos.PositionNumber,
+                    CornerRadius = 0,
+                    Margin = 0,
+                    Command = new Command(() => {
+                        ChooseRoom(position);
+                    })
+                };
+                EmptyRooms.Children.Add(button);
+            }
+        }
+
+        private async void LoadPositions()
+        {
+            //Tuple<APIController.Response, string, RoomPosition[]> result = await APIController.GetPositionsWithoutTag();
+            //positions = result.Item3.ToList();
         }
 
         private void StartWriting(object sender, EventArgs e)
         {
             ImageWait.IsVisible = true;
             ImageOk.IsVisible = false;
-            NFCController.StartPublishing(EventId_Entry.Text, OnMessagePublished);
+            NFCController.StartPublishing(currentPosition.RoomName + "/" + currentPosition.PositionNumber, OnMessagePublished);
+
+            StartWriting_Button.BackgroundColor = Color.White;
+            StartWriting_Button.IsEnabled = false;
+            LockButtons();
         }
 
         private void OnMessagePublished(NFCTag tag)
         {
             ImageWait.IsVisible = false;
             ImageOk.IsVisible = true;
-            TagId_Label.Text = tag.TagId;
-            EventId_Label.Text = tag.MeetingCode;
+            //TagId_Label.Text = tag.TagId;
+            //EventId_Label.Text = tag.MeetingCode;
             NFCController.StopAll();
+
+            positions.Remove(currentPosition);
+            Room_Label.Text = "";
+            Application.Current.MainPage.DisplayAlert("Success", "Succesfully assigned tag " + tag.TagId + " to " + currentPosition.RoomName + "/" + currentPosition.PositionNumber, "Ok");
+            currentPosition = null;
+            CreateButtons();
         }
 
         public void StopAll()
         {
             NFCController.StopAll();
         }
+
+        private void ChooseRoom(RoomPosition position)
+        {
+            currentPosition = position;
+            Room_Label.Text = "Choosen " + position.RoomName + "/" + position.PositionNumber;
+            StartWriting_Button.BackgroundColor = Color.FromHex("008B8B");
+            StartWriting_Button.IsEnabled = NFCController.IsEnabled;
+            ImageWait.IsVisible = true;
+            ImageOk.IsVisible = false;
+        }
+
+        private void LockButtons()
+        {
+            foreach (var child in EmptyRooms.Children)
+                child.IsEnabled = false;
+        }
+
 
 
     }

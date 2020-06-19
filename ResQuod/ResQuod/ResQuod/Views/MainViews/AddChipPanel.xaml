@@ -8,17 +8,16 @@
              Title="Program new chip">
   <ContentPage.Content>
         <StackLayout StyleClass="Container">
-            <StackLayout Margin="0,20,0,50" HorizontalOptions="Center" VerticalOptions="Start">
-                <Label Text="Programming chip:" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"></Label>
-                <Label x:Name="TagId_Label" Text="Tag id: " HorizontalTextAlignment="Center"></Label>
-                <Label Text="With event data:" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"></Label>
-                <Label x:Name="EventName_Label" Text="Event name:" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="EventDate_Label" Text="Event date:" HorizontalTextAlignment="Center"></Label>
-                <Label x:Name="EventId_Label" Text="Event id:" HorizontalTextAlignment="Center"></Label>
-                <Entry x:Name="EventId_Entry" Placeholder="EventId_Test"></Entry>
-                <Button x:Name="Start" Clicked="StartWriting" Text="Write"></Button>
+            <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" Margin="20,20,20,0" Text="Select the position to which you want to assign the code:"></Label>
+            <StackLayout Margin="0,20,0,0" HorizontalOptions="Center" VerticalOptions="Start">
+                <ScrollView Orientation="Horizontal" Margin="20,0,20,50">
+                    <StackLayout Orientation="Horizontal" x:Name="EmptyRooms">
+                    </StackLayout>
+                </ScrollView>
+                <Label x:Name="Room_Label" Text="" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
             </StackLayout>
-            <StackLayout>
+            <StackLayout HorizontalOptions="Center">
+                <Button x:Name="StartWriting_Button" BackgroundColor="White" Margin="0,0,0,20" BorderColor="Black" Text="Assign Tag to position" Clicked="StartWriting" IsEnabled="False"></Button>
                 <Label x:Name="Title_Label" Text="Approach NFC Tag" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="NFCAvailable_Label" Text="Available" HorizontalTextAlignment="Center"></Label>
                 <Label x:Name="NFCEnabled_Label" Text="Enabled" HorizontalTextAlignment="Center"></Label>
