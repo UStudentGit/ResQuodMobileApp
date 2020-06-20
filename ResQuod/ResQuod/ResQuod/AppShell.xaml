@@ -5,21 +5,31 @@
        x:Class="ResQuod.AppShell"
        Navigating="OnNavigating"
        Visual="Material">
-    <TabBar Style="{StaticResource ShellBaseStyle}">
+    <TabBar Style="{StaticResource ShellBaseStyle}" x:Name="tabBar">
         <Tab Title="Home" Icon="tabbed_home.png">
-            <ShellContent Route="homePanel" ContentTemplate="{DataTemplate views:HomePanel}" />
+            <ShellContent Route="home">
+                <views:HomePanel x:Name="homePanel" />
+            </ShellContent>
         </Tab>
         <Tab Title="Attend" Icon="tabbed_attendance.png">
-            <ShellContent Route="attendence" ContentTemplate="{DataTemplate views:AttendancePanel}" />
+            <ShellContent Route="attendence">
+                <views:AttendancePanel x:Name="attendancePanel" />
+            </ShellContent>
         </Tab>
         <Tab Title="Events" Icon="tabbed_events.png">
-            <ShellContent Route="events" ContentTemplate="{DataTemplate views:EventsPanel}" />
+            <ShellContent Route="events">
+                <views:EventsPanel x:Name="eventsPanel" />
+            </ShellContent>
         </Tab>
         <Tab Title="Add chip" Icon="tabbed_addchip.png">
-            <ShellContent Route="addChip" ContentTemplate="{DataTemplate views:AddChipPanel}" />
+            <ShellContent Route="addChip">
+                <views:AddChipPanel x:Name="addChipPanel" />
+            </ShellContent>
         </Tab>
         <Tab Title="User" Icon="tabbed_user.png">
-            <ShellContent Route="user" ContentTemplate="{DataTemplate views:UserPanel}" />
+            <ShellContent Route="user">
+                <views:UserPanel x:Name="userPanel" />
+            </ShellContent>
         </Tab>
     </TabBar>
 </Shell>

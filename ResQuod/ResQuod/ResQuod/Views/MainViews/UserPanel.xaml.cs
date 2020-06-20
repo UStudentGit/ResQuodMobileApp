@@ -13,7 +13,7 @@ using Xamarin.Forms.Internals;
 
 namespace ResQuod.Views.MainViews
 {
-    public partial class UserPanel : ContentPage
+    public partial class UserPanel : ContentPage, IMainView
     {
         private User UserData;
 
@@ -34,6 +34,11 @@ namespace ResQuod.Views.MainViews
             NameInput.Text = UserData.Name;
             SurnameInput.Text = UserData.Surname;
             EmailInput.Text = UserData.Email;
+        }
+
+        public void onNavigated()
+        {
+
         }
 
         private async void OnLogoutButtonClicked(object sender, EventArgs args)
@@ -78,11 +83,6 @@ namespace ResQuod.Views.MainViews
         {
             TryPatch();
         }
-
-        //private async void LogOut()
-        //{
-            
-        //}
 
         private async void TryPatch()
         {
