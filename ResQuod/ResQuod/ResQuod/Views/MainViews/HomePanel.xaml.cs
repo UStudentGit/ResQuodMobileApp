@@ -25,16 +25,15 @@ namespace ResQuod.Views.MainViews
 
         public void OnNavigated()
         {
-            if (events.Count == 0)
-            {
-                GetEvents();
-            }
+            GetEvents();
         }
 
         private async void GetEvents()
         {
-            var response = await APIController.GetUserEvents();
+            events.Clear();
+            CurrentEventsWrapper.Children.Clear();
 
+            var response = await APIController.GetUserEvents();
             if (response.Item1 != APIController.Response.Success)
             {
                 events.Clear();
