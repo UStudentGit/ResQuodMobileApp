@@ -3,14 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:ResQuod.Models"
              mc:Ignorable="d"
              x:Class="ResQuod.Views.MainViews.EventsPanel"
              Title="Find events">
-    <ContentPage.Content>
-        <StackLayout StyleClass="Container">
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                 Command="{Binding GetEventsCommand}">
+        <CollectionView
+            SelectionMode="Single"
+            SelectionChanged="CollectionView_SelectionChanged"
+            ItemsSource="{Binding Events}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Event">
+                    <Frame
+                        Margin="10,5"
+                        Padding="0"
+                        BackgroundColor="Blue"
+                        CornerRadius="10"
+                        HeightRequest="125"
+                        InputTransparent="True"
+                        IsClippedToBounds="True"
+                        HasShadow="True"
+                        Visual="Material">
+                        <StackLayout VerticalOptions="Center">
+                            <Label FontSize="25" Text="{Binding Name}"/>
+                            <Label FontSize="18" Text="{Binding Room.Corpo.Name}"/>
+                            <Label FontSize="18" Text="{Binding Room.Name}"/>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>
