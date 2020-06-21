@@ -78,11 +78,17 @@ namespace ResQuod.Views.MainViews
             //TagId_Label.Text = tag.TagId;
             //EventId_Label.Text = tag.MeetingCode;
             NFCController.StopAll();
-
+            SendRequest(tag.TagId);
             //Application.Current.MainPage.DisplayAlert("Success", "Succesfully assigned tag " + tag.TagId + " to " + currentPosition.RoomName + "/" + currentPosition.PositionNumber, "Ok");
             currentPosition = null;
             GeneratePickerElements();
             NFCController.StartListening();
+        }
+
+        private async void SendRequest(string tagId)
+        {
+            Tuple<APIController.Response, string> result = await APIController.AssignTagToPosition(tagId, currentPosition.PositionId);
+            await Application.Current.MainPage.DisplayAlert(result.Item1.ToString(), result.Item2, "Ok");
         }
 
         public void StopAll()

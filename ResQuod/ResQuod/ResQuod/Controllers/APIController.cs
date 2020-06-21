@@ -156,44 +156,6 @@ namespace ResQuod.Controllers
             return Tuple.Create(Response.UnknowError, error.Message, new User());
         }
 
-        public static async Task<Tuple<Response, string, PresenceResponse>> ReportPresence(string tag)
-        {
-            //First check internet connection
-            if (!InternetController.IsInternetActive())
-                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection", new PresenceResponse());
-
-            var uri = new Uri(string.Format(Constants.API_ReportPresence + "?tagId=" + tag, string.Empty));
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            //var req = new { tagId = tag};
-            //var json = JsonConvert.SerializeObject(req);
-            var content = new StringContent("", Encoding.UTF8, "application/json");
-            
-            HttpResponseMessage response = await client.PostAsync(uri, content);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-                return Tuple.Create(Response.ServerProblem, "Server problem", new PresenceResponse());
-
-            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                var _data = await response.Content.ReadAsStringAsync();
-                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
-                return Tuple.Create(Response.BadRequest, _error.Message, new PresenceResponse());
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                var _data = await response.Content.ReadAsStringAsync();
-                var presenceResponse = JsonConvert.DeserializeObject<PresenceResponse>(_data);
-                return Tuple.Create(Response.Success, "Succesfully reported presence", presenceResponse);
-            }
-
-            var data = await response.Content.ReadAsStringAsync();
-            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
-            return Tuple.Create(Response.BadRequest, error.Message, new PresenceResponse());
-        }
-
         public static async Task<Tuple<Response, string>> UserPatch(UserPatchModel item)
         {
             //First check internet connection
@@ -270,6 +232,88 @@ namespace ResQuod.Controllers
             var data = await response.Content.ReadAsStringAsync();
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.UnknowError, error.Message, new RoomPosition[0]);
+        }
+
+        public static async Task<Tuple<Response, string, PresenceResponse>> ReportPresence(string tag)
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection", new PresenceResponse());
+
+            var uri = new Uri(string.Format(Constants.API_ReportPresence + "?tagId=" + tag, string.Empty));
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            //var req = new { tagId = tag};
+            //var json = JsonConvert.SerializeObject(req);
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem", new PresenceResponse());
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message, new PresenceResponse());
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var presenceResponse = JsonConvert.DeserializeObject<PresenceResponse>(_data);
+                return Tuple.Create(Response.Success, "Succesfully reported presence", presenceResponse);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.BadRequest, error.Message, new PresenceResponse());
+        }
+
+        public static async Task<Tuple<Response, string>> AssignTagToPosition(string tag, int positionId)
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
+
+            var uri = new Uri(string.Format(Constants.API_AssignTagToPosition));
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var req = new { tagId = tag, id = positionId};
+            var json = JsonConvert.SerializeObject(req);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var method = new HttpMethod("PATCH");
+
+            var request = new HttpRequestMessage(method, uri)
+            {
+                Content = content
+            };            
+
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                return Tuple.Create(Response.Success, "Succesfully assigned tag " + tag);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.BadRequest, error.Message);
         }
     }
 }
