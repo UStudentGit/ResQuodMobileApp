@@ -20,7 +20,7 @@ namespace ResQuod.Views.MainViews
             //AppShell.StartNFCRedirecting();
         }
 
-        public void onNavigated()
+        public void OnNavigated()
         {
             
         }

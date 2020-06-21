@@ -15,7 +15,6 @@ namespace ResQuod
             InitializeComponent();
             MainPage = new AppShell();
             TryLogin();
-            
         }
 
         private async void TryLogin()
@@ -34,8 +33,7 @@ namespace ResQuod
             }
 
             //Open login panel
-            await Shell.Current.GoToAsync("startPage");
-                      
+            await Shell.Current.GoToAsync(AppShell.Routes.StartPage);
         }
 
         protected override void OnStart()
@@ -50,6 +48,7 @@ namespace ResQuod
 
         protected override void OnResume()
         {
+            base.OnResume();
             NFCController.Resume();
         }
     }

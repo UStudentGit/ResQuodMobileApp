@@ -6,6 +6,6 @@ namespace ResQuod.Views
 {
     public interface IMainView
     {
-        void onNavigated();
+        void OnNavigated();
     }
 }

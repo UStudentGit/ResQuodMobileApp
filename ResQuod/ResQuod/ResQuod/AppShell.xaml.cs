@@ -15,6 +15,7 @@ namespace ResQuod
     {
         public static class Routes
         {
+            public const string StartPage = "//startPage";
             public const string Home = "//home";
             public const string Attendance = "//attendance";
             public const string Events = "//events";
@@ -26,7 +27,6 @@ namespace ResQuod
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute("startPage", typeof(StartPage));
             StartNFCRedirecting();
         }
 
@@ -34,25 +34,14 @@ namespace ResQuod
         {
             if (Shell.Current == null)
                 return;
-
-            // hax: disable back button on start page
-            //TODO: make dependency service that will kill app
-            //reflink: https://stackoverflow.com/questions/29257929/how-to-terminate-a-xamarin-application
-            if (e.Source == ShellNavigationSource.Pop && Shell.Current.CurrentState.Location.ToString().IndexOf("startPage") > -1)
-            {
-                e.Cancel();
-            }
-
-
-
-            //Application.Current.MainPage.DisplayAlert(e.Source.ToString(), e.Target.Location.ToString(), "Ok");
+            
             if ((e.Source == ShellNavigationSource.ShellSectionChanged || e.Source == ShellNavigationSource.Unknown) 
                 && e.Target.Location.ToString() != Routes.Attendance)
             {
                 NFCController.StartListening(OnMessageReceived, true);
             }
 
-            MapRouteToPage(e.Target.Location)?.onNavigated();
+            MapRouteToPage(e.Target.Location)?.OnNavigated();
         }
 
         private static void OnMessageReceived(NFCTag tag)
@@ -83,7 +72,9 @@ namespace ResQuod
         private IMainView MapRouteToPage(Uri location)
         {
             switch (location.ToString())
-            {               
+            {
+                case Routes.StartPage:
+                    return startPage;
                 case Routes.Home:
                     return homePanel;
                 case Routes.Attendance:

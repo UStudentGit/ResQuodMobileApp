@@ -20,12 +20,21 @@ namespace ResQuod.Views.StartPageViews
         public LoginPage()
         {
             InitializeComponent();
+            ReadUserData();
+        }
 
+        public void ReadUserData()
+        {
             var user = SessionController.GetUserData();
             if (user != null)
             {
                 Email.Text = user.Email;
                 Password.Text = user.Password;
+            }
+            else
+            {
+                Email.Text = string.Empty;
+                Password.Text = string.Empty;
             }
         }
 
@@ -63,20 +72,7 @@ namespace ResQuod.Views.StartPageViews
             {
                 SaveUserData(getUser_response.Item3);
                 SessionController.SaveUserData(new UserSessionData() { Email = Email.Text, Password = Password.Text });
-                
-                if (Shell.Current == null)
-                {
-                    //zasadniczo nie powinno sie wydarzyc
-                    App.Current.MainPage = new AppShell();
-                }
-                else
-                {
-                    // przechodzimy do poprzedniego routa, 
-                    // bo wejscie na startPage jest mozliwe jako relatywne,
-                    // czyli tutaj aktualna sciezka powinna byc zawsze w style
-                    // {costam}/startPage
-                    await Shell.Current.GoToAsync("..");
-                }
+                await Shell.Current.GoToAsync(AppShell.Routes.Home);
             }
         }
 

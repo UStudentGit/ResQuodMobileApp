@@ -20,13 +20,14 @@ namespace ResQuod.Views.MainViews
         public UserPanel()
         {
             InitializeComponent();
+            UserData = new User();
+        }
 
-            UserData = new User
-            {
-                Name = Preferences.Get("UserName", string.Empty),
-                Surname = Preferences.Get("UserSurname", string.Empty),
-                Email = Preferences.Get("UserEmail", string.Empty)
-            };
+        public void OnNavigated()
+        {
+            UserData.Name = Preferences.Get("UserName", string.Empty);
+            UserData.Surname = Preferences.Get("UserSurname", string.Empty);
+            UserData.Email = Preferences.Get("UserEmail", string.Empty);
 
             Nick.Text = UserData.Name + " " + UserData.Surname;
             Email.Text = UserData.Email;
@@ -34,11 +35,6 @@ namespace ResQuod.Views.MainViews
             NameInput.Text = UserData.Name;
             SurnameInput.Text = UserData.Surname;
             EmailInput.Text = UserData.Email;
-        }
-
-        public void onNavigated()
-        {
-
         }
 
         private async void OnLogoutButtonClicked(object sender, EventArgs args)
@@ -57,10 +53,7 @@ namespace ResQuod.Views.MainViews
             Preferences.Set("UserEmail", string.Empty);
             SessionController.ClearUserData();
 
-            // IMPORTANT! startPage jest route'em globalnym,
-            // wiec nie mozna go ustawic jako absolutnej sciezki, wiec
-            // po tej akcji ponizej aktualna lokalizacja bedzie taka: {aktualna_sciezka}/startPage
-            await Shell.Current.GoToAsync("startPage");
+            await Shell.Current.GoToAsync(AppShell.Routes.StartPage);
             NFCController.StopAll();
         }
 

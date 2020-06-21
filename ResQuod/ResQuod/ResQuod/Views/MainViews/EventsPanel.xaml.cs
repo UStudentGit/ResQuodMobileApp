@@ -16,7 +16,7 @@ namespace ResQuod.Views.MainViews
             InitializeComponent();
         }
 
-        public void onNavigated()
+        public void OnNavigated()
         {
 
         }

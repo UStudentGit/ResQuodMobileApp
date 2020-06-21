@@ -25,7 +25,7 @@ namespace ResQuod.Views.MainViews
 
         }
 
-        public void onNavigated()
+        public void OnNavigated()
         {
             GeneratePickerElements();
         }

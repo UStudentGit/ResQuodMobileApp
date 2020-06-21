@@ -7,6 +7,6 @@
             mc:Ignorable="d"
             x:Class="ResQuod.Views.StartPage"
             Visual="Material">
-    <local:LoginPage Title="Login"/>
-    <local:RegisterPage Title="Register"/>
+    <local:LoginPage Title="Login" x:Name="loginPanel"/>
+    <local:RegisterPage Title="Register" x:Name="registerPanel"/>
 </TabbedPage>
