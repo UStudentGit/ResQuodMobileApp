@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ResQuod.Controllers
 {
-    class APIController
+    static class APIController
     {
         static HttpClient client = new HttpClient();
         static string token;
@@ -21,13 +21,6 @@ namespace ResQuod.Controllers
         public enum Response
         {
             Success, IncorrectCredentials, BadRequest, InternetConnectionProblem, ServerProblem, Forbidden, UnknowError
-        }
-
-        public APIController()
-        {
-            client = new HttpClient();
-            //client.MaxResponseContentBufferSize = 256000;
-            //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
         }
 
         public static async Task<Tuple<Response, string>> Login(LoginModel item)
