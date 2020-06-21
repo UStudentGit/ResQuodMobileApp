@@ -10,7 +10,9 @@
             <ShellContent Route="homePanel" ContentTemplate="{DataTemplate views:HomePanel}" />
         </Tab>
         <Tab Title="Attend" Icon="tabbed_attendance.png">
-            <ShellContent Route="attendence" ContentTemplate="{DataTemplate views:AttendancePanel}" />
+            <ShellContent Route="attendance">
+                <views:AttendancePanel x:Name="attendancePanel" />
+            </ShellContent>
         </Tab>
         <Tab Title="Events" Icon="tabbed_events.png">
             <ShellContent Route="events" ContentTemplate="{DataTemplate views:EventsPanel}" />

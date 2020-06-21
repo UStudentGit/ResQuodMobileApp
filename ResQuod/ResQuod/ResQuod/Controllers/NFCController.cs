@@ -10,6 +10,11 @@ namespace ResQuod
     //https://github.com/franckbour/Plugin.NFC
     static class NFCController
     {
+        enum State
+        {
+            Waiting, Listening, Publishing
+        }
+
         public static bool IsAvailable {
             get {
                 return CrossNFC.IsSupported && CrossNFC.Current.IsAvailable;
@@ -24,6 +29,8 @@ namespace ResQuod
             }
         }
 
+        private static State state = State.Waiting;
+
         public static bool IsListening { get; private set; }
 
         private static string currentMessage;
@@ -36,48 +43,7 @@ namespace ResQuod
         private static OnMessagePublished OnMessagePublishedHandler;
 
         public delegate void OnMessageReceived(NFCTag tag);
-        public delegate void OnMessagePublished(NFCTag tag);
-
-        public static void StartListening()
-        {
-            if (!(OnMessageReceivedHandler.Count > 1) || !IsListening)
-            {
-                //Start NFC
-                CrossNFC.Current.StartListening();
-
-                //Local Handlers
-                messageReceived = MessageReceived;
-                CrossNFC.Current.OnMessageReceived += messageReceived;
-                IsListening = true;
-            }
-        }
-
-        public static void StartListening(OnMessageReceived MessageReceivedHandler, bool additional = false)
-        {
-            if (!additional)
-            {
-                //Clear all
-                StopAll();
-                OnMessageReceivedHandler.Clear();
-            }
-            
-
-            //Start NFC
-            CrossNFC.Current.StartListening();
-
-            //Handler
-            if(!OnMessageReceivedHandler.Contains(MessageReceivedHandler))
-                OnMessageReceivedHandler.Add(MessageReceivedHandler);
-
-            //Local Handlers
-            messageReceived = MessageReceived;
-
-            if (!(OnMessageReceivedHandler.Count > 1) || !IsListening)
-            {
-                CrossNFC.Current.OnMessageReceived += messageReceived;
-                IsListening = true;
-            }
-        }
+        public delegate void OnMessagePublished(NFCTag tag);        
 
         public static void StopAll()
         {
@@ -104,8 +70,86 @@ namespace ResQuod
             
         }
 
+        public static void Pause()
+        {
+            try
+            {
+                CrossNFC.Current.StopListening();
+                CrossNFC.Current.StopPublishing();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        public static void Resume()
+        {
+            try
+            {
+                if(state != State.Waiting)
+                    CrossNFC.Current.StartListening();
+
+                if(state == State.Publishing)
+                    CrossNFC.Current.StartPublishing();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        public static void StartListening()
+        {
+            state = State.Listening;
+
+            if (!(OnMessageReceivedHandler.Count > 1) || !IsListening)
+            {
+                //Start NFC
+                CrossNFC.Current.StartListening();
+
+                //Local Handlers
+                messageReceived = MessageReceived;
+                CrossNFC.Current.OnMessageReceived += messageReceived;
+                IsListening = true;
+            }
+        }
+
+        public static void StartListening(OnMessageReceived MessageReceivedHandler, bool additional = false)
+        {
+            state = State.Listening;
+
+            if (!additional)
+            {
+                //Clear all
+                StopAll();
+                OnMessageReceivedHandler.Clear();
+            }
+
+
+            //Start NFC
+            CrossNFC.Current.StartListening();
+
+            //Handler
+            if (!OnMessageReceivedHandler.Contains(MessageReceivedHandler))
+                OnMessageReceivedHandler.Add(MessageReceivedHandler);
+
+            //Local Handlers
+            messageReceived = MessageReceived;
+
+            if (!(OnMessageReceivedHandler.Count > 1) || !IsListening)
+            {
+                CrossNFC.Current.OnMessageReceived += messageReceived;
+                IsListening = true;
+            }
+        }
+
+
         public static void StartPublishing(string meetingID, OnMessagePublished MessagePublishedHandler)
         {
+            state = State.Publishing;
             //Clear all
             StopAll();
             currentMessage = meetingID;

@@ -26,6 +26,11 @@ namespace ResQuod.Views.MainViews
 
         }
 
+        public void onNavigated()
+        {
+            Application.Current.MainPage.DisplayAlert("Error", "Elo", "Ok");
+        }
+
         private void InitGUI()
         {
             NFCAvailable_Label.Text = NFCController.IsAvailable ? "NFC available" : "NFC not supportet on Your phone";

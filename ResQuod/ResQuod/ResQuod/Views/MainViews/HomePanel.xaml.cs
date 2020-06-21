@@ -17,7 +17,7 @@ namespace ResQuod.Views.MainViews
         public HomePanel()
         {
             InitializeComponent();
-            AppShell.StartNFCRedirecting();
+            //AppShell.StartNFCRedirecting();
         }
     }
 }

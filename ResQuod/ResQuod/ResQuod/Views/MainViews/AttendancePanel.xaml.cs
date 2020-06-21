@@ -15,21 +15,27 @@ namespace ResQuod.Views.MainViews
     public partial class AttendancePanel : ContentPage
     {
         string currentTag = "test";
+        bool firstOpen = false;
         //MainPage parent;
 
         public AttendancePanel()
         {
             InitializeComponent();
-            StartNFCListening();
-            //this.parent = parent;
+        }
+        public void onNavigated()
+        {
+            if(firstOpen == false)
+                StartNFCListening();
         }
 
         public void StartNFCListening()
         {
+            firstOpen = true;
             NFCAvailable_Label.Text = NFCController.IsAvailable ? "NFC available" : "NFC not supportet on Your phone";
             NFCAvailable_Label.TextColor = NFCController.IsAvailable? Color.Green : Color.Red;
             NFCEnabled_Label.Text = NFCController.IsEnabled ? "NFC enabled" : "NFC disabled";
             NFCEnabled_Label.TextColor = NFCController.IsEnabled? Color.Green : Color.Red;
+            TagId_Label.Text = "ID: ";
 
             if (NFCController.IsEnabled)
             {
@@ -82,7 +88,6 @@ namespace ResQuod.Views.MainViews
                     {
                         
                         // TODO: jak chodzi o zmianę strony to Shell.Current.GoToAsync
-                        //parent.CurrentPage = parent.Children[nextChildIndex];
                         await Shell.Current.GoToAsync("//events");
                         StartNFCListening();
 

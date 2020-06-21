@@ -15,12 +15,21 @@ namespace ResQuod
 {
     public partial class AppShell : Shell
     {
-        string attendanceRoute = "//attendence";
-        static bool nfcRedirecting = false;
+        public static class Routes
+        {
+            public const string Home = "//home";
+            public const string Attendance = "//attendance";
+            public const string Events = "//events";
+            public const string AddChip = "//addChip";
+            public const string User = "//user";
+        }
+
+        
         public AppShell()
         {
             InitializeComponent();
             Routing.RegisterRoute("startPage", typeof(StartPage));
+            StartNFCRedirecting();
         }
 
         private void OnNavigating(object sender, ShellNavigatingEventArgs e)
@@ -33,8 +42,10 @@ namespace ResQuod
                 e.Cancel();
             }
 
-            
-            if ((e.Source == ShellNavigationSource.ShellSectionChanged || e.Source == ShellNavigationSource.Unknown ) && e.Target.Location.ToString() != attendanceRoute && nfcRedirecting)
+
+            //Application.Current.MainPage.DisplayAlert(e.Source.ToString(), e.Target.Location.ToString(), "Ok");
+            if ((e.Source == ShellNavigationSource.ShellSectionChanged || e.Source == ShellNavigationSource.Unknown) 
+                && e.Target.Location.ToString() != Routes.Attendance)
             {
                 NFCController.StartListening(OnMessageReceived, true);
             }
@@ -43,12 +54,24 @@ namespace ResQuod
 
         private static void OnMessageReceived(NFCTag tag)
         {
-            Shell.Current.GoToAsync("//attendence");
+            Redirect();
+        }
+
+        private static async void Redirect()
+        {
+            await Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await Shell.Current.GoToAsync(Routes.Attendance);
+                });
+
+            });
         }
 
         public static async void StartNFCRedirecting()
         {
-            nfcRedirecting = true;
             await Task.Delay(100);
             NFCController.StartListening(OnMessageReceived, true);
         }
