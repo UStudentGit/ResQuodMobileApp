@@ -53,7 +53,7 @@ namespace ResQuod.Views.MainViews
         {
             TagId_Label.Text = "ID: " + tag.TagId;
             //TODO
-            //currentTag = tag.TagId;
+            currentTag = tag.TagId;
             Check_Button.IsEnabled = true;
             Check_Button.BackgroundColor = Color.FromHex("008B8B"); ;
 
@@ -101,7 +101,7 @@ namespace ResQuod.Views.MainViews
             if (response.Item1 == APIController.Response.BadRequest)
             {
                 var eventResponse = response.Item3;
-                await Application.Current.MainPage.DisplayAlert(response.Item1.ToString(), "You have no permission to report presence in this event", "Ok");
+                await Application.Current.MainPage.DisplayAlert(response.Item1.ToString(), response.Item2, "Ok");
                 return;
             }
 

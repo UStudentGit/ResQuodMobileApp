@@ -25,16 +25,41 @@ namespace ResQuod.Views.MainViews
 
         public void OnNavigated()
         {
-            UserData.Name = Preferences.Get("UserName", string.Empty);
-            UserData.Surname = Preferences.Get("UserSurname", string.Empty);
-            UserData.Email = Preferences.Get("UserEmail", string.Empty);
+            LoadData();
+        }
 
-            Nick.Text = UserData.Name + " " + UserData.Surname;
-            Email.Text = UserData.Email;
+        private async void ReloadUserData()
+        {
+            var getUser_response = await APIController.GetUser();
 
-            NameInput.Text = UserData.Name;
-            SurnameInput.Text = UserData.Surname;
-            EmailInput.Text = UserData.Email;
+            if (getUser_response.Item1 != APIController.Response.Success)
+            {
+                await DisplayAlert(title: "Error", message: "Error: " + getUser_response.Item2, cancel: "Ok");
+                return;
+            }
+            else
+            {
+                var user = getUser_response.Item3;
+                SaveUserData(user);
+
+                UserData.Name = user.Name;
+                UserData.Surname = user.Surname;
+                UserData.Email = user.Email;
+
+                Nick.Text = UserData.Name + " " + UserData.Surname;
+                Email.Text = UserData.Email;
+
+                NameInput.Text = UserData.Name;
+                SurnameInput.Text = UserData.Surname;
+                EmailInput.Text = UserData.Email;
+            }
+        }
+
+        private void LoadData()
+        {
+            LabelErrorAlert.IsVisible = false;
+            LabelSuccessAlert.IsVisible = false;
+            ReloadUserData();
         }
 
         private async void OnLogoutButtonClicked(object sender, EventArgs args)
@@ -52,6 +77,8 @@ namespace ResQuod.Views.MainViews
             Preferences.Set("UserSurname", string.Empty);
             Preferences.Set("UserEmail", string.Empty);
             SessionController.ClearUserData();
+
+            PasswordInput.Text = "";
 
             await Shell.Current.GoToAsync(AppShell.Routes.StartPage);
             NFCController.StopAll();
@@ -75,6 +102,7 @@ namespace ResQuod.Views.MainViews
         private void OnConfirmPatchButtonClicked(object sender, EventArgs args)
         {
             TryPatch();
+            PasswordInput.Text = "";
         }
 
         private async void TryPatch()
@@ -97,6 +125,7 @@ namespace ResQuod.Views.MainViews
             {
                 LabelErrorAlert.Text = FeedbackMessages.RequestFail;
                 LabelErrorAlert.IsVisible = true;
+                LabelSuccessAlert.IsVisible = false;
                 Console.WriteLine("[REQUEST ERROR] " + response.Item2);
                 return;
             }
@@ -145,6 +174,13 @@ namespace ResQuod.Views.MainViews
             PasswordErrorLabel.IsVisible = false;
 
             return true;
+        }
+
+        private void SaveUserData(User user)
+        {
+            Preferences.Set("UserName", user.Name);
+            Preferences.Set("UserSurname", user.Surname);
+            Preferences.Set("UserEmail", user.Email);
         }
     }
 }
