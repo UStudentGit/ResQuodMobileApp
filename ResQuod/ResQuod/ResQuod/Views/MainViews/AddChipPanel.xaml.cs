@@ -22,13 +22,12 @@ namespace ResQuod.Views.MainViews
         {
             InitializeComponent();
             InitGUI();
-            GeneratePickerElements();
 
         }
 
         public void onNavigated()
         {
-            Application.Current.MainPage.DisplayAlert("Error", "Elo", "Ok");
+            GeneratePickerElements();
         }
 
         private void InitGUI()

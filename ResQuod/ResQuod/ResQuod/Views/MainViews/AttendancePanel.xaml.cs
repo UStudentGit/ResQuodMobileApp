@@ -28,11 +28,6 @@ namespace ResQuod.Views.MainViews
                 StartNFCListening();
         }
 
-        public void onNavigated()
-        {
-
-        }
-
         public void StartNFCListening()
         {
             firstOpen = true;
