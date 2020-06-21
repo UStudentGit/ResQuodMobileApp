@@ -9,11 +9,16 @@ using Xamarin.Forms.Xaml;
 
 namespace ResQuod.Views.MainViews
 {
-    public partial class EventsPanel : ContentPage
+    public partial class EventsPanel : ContentPage, IMainView
     {
         public EventsPanel()
         {
             InitializeComponent();
+        }
+
+        public void onNavigated()
+        {
+
         }
     }
 }

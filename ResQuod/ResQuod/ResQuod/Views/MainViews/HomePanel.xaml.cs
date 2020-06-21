@@ -12,12 +12,17 @@ using Xamarin.Forms.Xaml;
 
 namespace ResQuod.Views.MainViews
 {
-    public partial class HomePanel : ContentPage
+    public partial class HomePanel : ContentPage, IMainView
     {
         public HomePanel()
         {
             InitializeComponent();
             //AppShell.StartNFCRedirecting();
+        }
+
+        public void onNavigated()
+        {
+            
         }
     }
 }

@@ -13,7 +13,7 @@ using Xamarin.Forms.Xaml;
 
 namespace ResQuod.Views.MainViews
 {
-    public partial class AddChipPanel : ContentPage
+    public partial class AddChipPanel : ContentPage, IMainView
     {
         private List<RoomPosition> positions = new List<RoomPosition>();
         private RoomPosition currentPosition;

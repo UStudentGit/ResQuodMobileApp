@@ -1,6 +1,5 @@
 ﻿using ResQuod.Models;
 using ResQuod.Views;
-using ResQuod.Views.MainViews;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace ResQuod
 {
@@ -34,6 +32,9 @@ namespace ResQuod
 
         private void OnNavigating(object sender, ShellNavigatingEventArgs e)
         {
+            if (Shell.Current == null)
+                return;
+
             // hax: disable back button on start page
             //TODO: make dependency service that will kill app
             //reflink: https://stackoverflow.com/questions/29257929/how-to-terminate-a-xamarin-application
@@ -43,6 +44,7 @@ namespace ResQuod
             }
 
 
+
             //Application.Current.MainPage.DisplayAlert(e.Source.ToString(), e.Target.Location.ToString(), "Ok");
             if ((e.Source == ShellNavigationSource.ShellSectionChanged || e.Source == ShellNavigationSource.Unknown) 
                 && e.Target.Location.ToString() != Routes.Attendance)
@@ -50,6 +52,7 @@ namespace ResQuod
                 NFCController.StartListening(OnMessageReceived, true);
             }
 
+            MapRouteToPage(e.Target.Location)?.onNavigated();
         }
 
         private static void OnMessageReceived(NFCTag tag)
@@ -68,12 +71,32 @@ namespace ResQuod
                 });
 
             });
+
         }
 
         public static async void StartNFCRedirecting()
         {
             await Task.Delay(100);
             NFCController.StartListening(OnMessageReceived, true);
+        }
+
+        private IMainView MapRouteToPage(Uri location)
+        {
+            switch (location.ToString())
+            {               
+                case Routes.Home:
+                    return homePanel;
+                case Routes.Attendance:
+                    return attendancePanel;
+                case Routes.Events:
+                    return eventsPanel;
+                case Routes.AddChip:
+                    return addChipPanel;
+                case Routes.User:
+                    return userPanel;
+                default:
+                    return null;
+            }
         }
 
     }

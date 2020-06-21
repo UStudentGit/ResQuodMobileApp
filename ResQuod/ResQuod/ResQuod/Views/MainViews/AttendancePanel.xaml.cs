@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace ResQuod.Views.MainViews
 {
-    public partial class AttendancePanel : ContentPage
+    public partial class AttendancePanel : ContentPage, IMainView
     {
         string currentTag = "test";
         bool firstOpen = false;
@@ -26,6 +26,11 @@ namespace ResQuod.Views.MainViews
         {
             if(firstOpen == false)
                 StartNFCListening();
+        }
+
+        public void onNavigated()
+        {
+
         }
 
         public void StartNFCListening()
