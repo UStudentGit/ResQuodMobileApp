@@ -7,10 +7,11 @@
              x:Class="ResQuod.Views.MainViews.EventsPanel"
              Title="Find events">
     <ContentPage.Content>
-        <StackLayout StyleClass="Container">
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="30">
+            <Entry x:Name="Password" Placeholder="Event Password" IsPassword="True" />
+            <Label x:Name="PasswordErrorLabel" StyleClass="InputError"/>
+
+            <Button Clicked="OnJoinClick" Text="Confirm" Margin="0, 30" StyleClass="Large, Success"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

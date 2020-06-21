@@ -315,5 +315,51 @@ namespace ResQuod.Controllers
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.BadRequest, error.Message);
         }
+
+        public static async Task<Tuple<Response, string>> JoinEvent(string password)
+        {
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection");
+
+            var uri = new Uri(string.Format(Constants.API_JoinEvent + "?password=" + password, string.Empty));
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //var json = JsonConvert.SerializeObject(password);
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+            Console.WriteLine("[response] " + response.StatusCode);
+            Console.WriteLine("[pass] " + password);
+            Console.WriteLine("[uri] " + uri);
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                Console.WriteLine("[SERVER] " + _error.Message);
+                return Tuple.Create(Response.ServerProblem, _error.Message);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                Console.WriteLine("[BAD REQUEST] " + _error.Message);
+                return Tuple.Create(Response.BadRequest, _error.Message);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var joinResponse = JsonConvert.DeserializeObject<string>(_data);
+                Console.WriteLine("[OK] " + joinResponse);
+                return Tuple.Create(Response.Success, joinResponse);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            Console.WriteLine("[UNKNOWN] " + error.Message);
+            return Tuple.Create(Response.UnknowError, error.Message);
+        }
     }
 }
