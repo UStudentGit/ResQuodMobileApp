@@ -20,7 +20,7 @@ namespace ResQuod.Controllers
 
         public enum Response
         {
-            Success, IncorrectCredentials, BadRequest, InternetConnectionProblem, ServerProblem, UnknowError
+            Success, IncorrectCredentials, BadRequest, InternetConnectionProblem, ServerProblem, Forbidden, UnknowError
         }
 
         public APIController()
@@ -169,7 +169,7 @@ namespace ResQuod.Controllers
             //var req = new { tagId = tag};
             //var json = JsonConvert.SerializeObject(req);
             var content = new StringContent("", Encoding.UTF8, "application/json");
-            
+
             HttpResponseMessage response = await client.PostAsync(uri, content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
@@ -270,6 +270,51 @@ namespace ResQuod.Controllers
             var data = await response.Content.ReadAsStringAsync();
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.UnknowError, error.Message, new RoomPosition[0]);
+        }
+
+        public static async Task<Tuple<Response, string, List<Event>>> GetUserEvents()
+        {
+            var events = new List<Event>();
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection", events);
+
+            var uri = new Uri(string.Format(Constants.API_GetUserEvents, string.Empty));
+
+            //var json = JsonConvert.SerializeObject("");
+            //var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage response = await client.GetAsync(uri);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem", events);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message, events);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.Forbidden, _error.Message, events);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                events = JsonConvert.DeserializeObject<List<Event>>(_data);
+                return Tuple.Create(Response.Success, "Succesfully loaded events", events);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.UnknowError, error.Message, events);
         }
     }
 }
