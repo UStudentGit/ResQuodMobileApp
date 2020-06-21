@@ -3,12 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:ResQuod.Views.ViewComponents"
              mc:Ignorable="d"
              x:Class="ResQuod.Views.MainViews.HomePanel"
              Title="Home">
     <ContentPage.Content>
         <StackLayout StyleClass="Container">
-            <Label Text="Home Panel" />
+            
+            <Label Text="Your events" StyleClass="Heading1" />
+            <Label Text="No events" StyleClass="GrayInfo" x:Name="CurrentEventsEmptyLabel"/>
+            <StackLayout x:Name="CurrentEventsWrapper"></StackLayout>
+
+            <!--<Label Text="Your future events" StyleClass="Heading1" />
+            <Label Text="No events" IsVisible="False" StyleClass="GrayInfo" x:Name="FutureEventsEmptyLabel" />
+            <StackLayout x:Name="FutureEventsWrapper">
+            </StackLayout>-->
+            
         </StackLayout>
   </ContentPage.Content>
 </ContentPage>

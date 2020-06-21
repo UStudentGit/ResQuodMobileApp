@@ -28,6 +28,7 @@ namespace ResQuod
         {
             InitializeComponent();
             StartNFCRedirecting();
+            CurrentItem = startPageShellItem;
         }
 
         private void OnNavigating(object sender, ShellNavigatingEventArgs e)
