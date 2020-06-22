@@ -34,7 +34,14 @@ namespace ResQuod.Controllers
                 cachedData = FileHelper.ReadObjectFromFile<UserSessionData>(userFile);
                 if (!string.IsNullOrEmpty(cachedData?.Password))
                 {
-                    cachedData.Password = EncryptionHelper.DecryptFromAes(cachedData.Password);
+                    try
+                    {
+                        cachedData.Password = EncryptionHelper.DecryptFromAes(cachedData.Password);
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
                 }
                 wasRead = true;
             }

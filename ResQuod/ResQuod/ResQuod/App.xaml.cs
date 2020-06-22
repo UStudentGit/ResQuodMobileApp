@@ -22,12 +22,16 @@ namespace ResQuod
             if (SessionController.IsSaved)
             {
                 var sessionData = SessionController.GetUserData();
-                var userData = new LoginModel() { Email = sessionData.Email, Password = sessionData.Password };
-                Tuple<Response, string> response = await APIController.Login(userData);
-
-                if (response.Item1 == Response.Success)
+                
+                if (sessionData != null)
                 {
-                    await Shell.Current.GoToAsync(AppShell.Routes.Home);
+                    var userData = new LoginModel() { Email = sessionData.Email, Password = sessionData.Password };
+                    Tuple<Response, string> response = await APIController.Login(userData);
+
+                    if (response.Item1 == Response.Success)
+                    {
+                        await Shell.Current.GoToAsync(AppShell.Routes.Home);
+                    }
                 }
             }
         }
