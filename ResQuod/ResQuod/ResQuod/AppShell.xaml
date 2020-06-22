@@ -22,7 +22,7 @@
                 <views:EventsPanel x:Name="eventsPanel" />
             </ShellContent>
         </Tab>
-        <Tab Title="Add chip" Icon="tabbed_addchip.png">
+        <Tab x:Name="AddChipTab" Title="Add chip" Icon="tabbed_addchip.png">
             <ShellContent Route="addChip">
                 <views:AddChipPanel x:Name="addChipPanel" />
             </ShellContent>

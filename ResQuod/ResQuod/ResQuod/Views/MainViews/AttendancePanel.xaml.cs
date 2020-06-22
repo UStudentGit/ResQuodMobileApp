@@ -89,7 +89,7 @@ namespace ResQuod.Views.MainViews
                     {
                         
                         // TODO: jak chodzi o zmianę strony to Shell.Current.GoToAsync
-                        await Shell.Current.GoToAsync("//events");
+                        await Shell.Current.GoToAsync(AppShell.Routes.Home);
                         StartNFCListening();
 
                     });

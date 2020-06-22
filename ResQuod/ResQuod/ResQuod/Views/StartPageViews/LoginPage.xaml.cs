@@ -104,6 +104,7 @@ namespace ResQuod.Views.StartPageViews
             Preferences.Set("UserName", user.Name);
             Preferences.Set("UserSurname", user.Surname);
             Preferences.Set("UserEmail", user.Email);
+            Preferences.Set("Role", user.Role);
         }
     }
 }

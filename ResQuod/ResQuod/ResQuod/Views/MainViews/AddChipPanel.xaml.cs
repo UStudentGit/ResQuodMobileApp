@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,7 +27,8 @@ namespace ResQuod.Views.MainViews
 
         public void OnNavigated()
         {
-            GeneratePickerElements();
+            if (Preferences.Get("Role", "") == "ROLE_ADMIN")
+                GeneratePickerElements();
         }
 
         private void InitGUI()
@@ -103,13 +104,20 @@ namespace ResQuod.Views.MainViews
 
         private void PositionPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!PositionPicker.IsEnabled)
-                return;
-            currentPosition = positions[PositionPicker.SelectedIndex];
-            StartWriting_Button.BackgroundColor = Color.FromHex("008B8B");
-            StartWriting_Button.IsEnabled = NFCController.IsEnabled;
-            ImageWait.IsVisible = true;
-            ImageOk.IsVisible = false;
+            try
+            {
+                if (!PositionPicker.IsEnabled && positions.Count > PositionPicker.SelectedIndex)
+                    return;
+                currentPosition = positions[PositionPicker.SelectedIndex];
+                StartWriting_Button.BackgroundColor = Color.FromHex("008B8B");
+                StartWriting_Button.IsEnabled = NFCController.IsEnabled;
+                ImageWait.IsVisible = true;
+                ImageOk.IsVisible = false;
+            }
+            catch(Exception exception)
+            {
+                Console.WriteLine("Out of range exception");
+            }
         }
     }
 }

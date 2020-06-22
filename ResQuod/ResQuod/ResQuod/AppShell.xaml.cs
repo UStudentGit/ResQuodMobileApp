@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ResQuod
@@ -33,6 +33,7 @@ namespace ResQuod
 
         private void OnNavigating(object sender, ShellNavigatingEventArgs e)
         {
+            AddChipTab.IsEnabled = Preferences.Get("Role", "") == "ROLE_ADMIN";
             if (Shell.Current == null)
                 return;
             
