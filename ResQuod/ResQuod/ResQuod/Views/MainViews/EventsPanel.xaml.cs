@@ -21,7 +21,7 @@ namespace ResQuod.Views.MainViews
 
         public void OnNavigated()
         {
-
+            PasswordErrorLabel.IsVisible = false;
         }
 
         private async void OnJoinClick(object sender, EventArgs e)
@@ -31,16 +31,21 @@ namespace ResQuod.Views.MainViews
 
         private async Task JoinEvent(string password)
         {
+            if (!ValidateInput())
+                return;
             //Send request to database
             var joinResponse = await APIController.JoinEvent(password);
 
             if (joinResponse.Item1 != APIController.Response.Success)
             {
                 await DisplayAlert(title: "Error", message: "Error: " + joinResponse.Item2, cancel: "Ok");
+                Password.Text = "";
                 return;
             }
 
             await DisplayAlert(title: "Success", message: "Success: " + joinResponse.Item2, cancel: "Ok");
+            Password.Text = "";
+            await Shell.Current.GoToAsync(AppShell.Routes.Home);
         }
 
         //byc moze niepotrzebne
@@ -49,7 +54,7 @@ namespace ResQuod.Views.MainViews
             //Check password
             if (String.IsNullOrEmpty(Password.Text))
             {
-                PasswordErrorLabel.Text = ValidationMessages.PasswordMin;
+                PasswordErrorLabel.Text = ValidationMessages.PasswordEventEmpty;
                 PasswordErrorLabel.IsVisible = true;
                 return false;
             }

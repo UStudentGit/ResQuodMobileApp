@@ -66,6 +66,13 @@
                 <Setter Property="TextColor" Value="#000" />
             </Style>
             
+            <!--Long text-->
+            <Style Class="Description" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="#333" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+            
             <!--Alerts-->
             <Style Class="AlertSuccess" TargetType="Label">
                 <Setter Property="BackgroundColor" Value="#007457" />

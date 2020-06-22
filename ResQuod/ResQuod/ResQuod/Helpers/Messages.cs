@@ -10,6 +10,7 @@ namespace ResQuod.Helpers
         public const string NameMin = "At least 6 characters required";
         public const string IncorrectEmail = "Incorrect email";
         public const string PasswordsNotEqual = "Passwords aren't equal";
+        public const string PasswordEventEmpty = "Password is required";
     }
 
     public static class FeedbackMessages
