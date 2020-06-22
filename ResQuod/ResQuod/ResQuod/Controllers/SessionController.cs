@@ -3,6 +3,7 @@ using ResQuod.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace ResQuod.Controllers
 {
@@ -19,6 +20,10 @@ namespace ResQuod.Controllers
 
         public static void SaveUserData(UserSessionData user)
         {
+            if (!string.IsNullOrEmpty(user?.Password))
+            {
+                user.Password = EncryptionHelper.EncryptWithAes(user.Password);
+            }
             FileHelper.SaveObjectToFile(user, userFile);
         }
 
@@ -27,6 +32,10 @@ namespace ResQuod.Controllers
             if (cachedData == null && !wasRead)
             {
                 cachedData = FileHelper.ReadObjectFromFile<UserSessionData>(userFile);
+                if (!string.IsNullOrEmpty(cachedData?.Password))
+                {
+                    cachedData.Password = EncryptionHelper.DecryptFromAes(cachedData.Password);
+                }
                 wasRead = true;
             }
 
