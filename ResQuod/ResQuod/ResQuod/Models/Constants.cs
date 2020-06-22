@@ -15,5 +15,6 @@ namespace ResQuod.Models
         public static readonly string API_AssignTagToPosition = "http://whcp.pl:3200/tagIdSetter";
         public static readonly string API_SendPresence = "http://whcp.pl:3200/presenceAtPosition";
         public static readonly string API_JoinEvent = "http://whcp.pl:3200/toEvent";
+        public static readonly string API_GetUserEvents = "http://whcp.pl:3200/userEvents";
     }
 }

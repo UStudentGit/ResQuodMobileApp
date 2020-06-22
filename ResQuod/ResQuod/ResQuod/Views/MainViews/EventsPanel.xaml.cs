@@ -1,6 +1,6 @@
 ﻿using ResQuod.Controllers;
 using ResQuod.Helpers;
-using ResQuod.Models;
+﻿using ResQuod.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,7 +48,6 @@ namespace ResQuod.Views.MainViews
             await Shell.Current.GoToAsync(AppShell.Routes.Home);
         }
 
-        //byc moze niepotrzebne
         private bool ValidateInput()
         {
             //Check password

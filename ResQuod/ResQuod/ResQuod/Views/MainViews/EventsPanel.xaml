@@ -11,7 +11,7 @@
             <Label x:Name="Join" StyleClass="Heading1" Text="Join new event" HorizontalOptions="Center"/>
             <Entry x:Name="Password" Placeholder="Event Password*" IsPassword="True" />
             <Label x:Name="PasswordErrorLabel" StyleClass="InputError"/>
-            
+
             <Button Clicked="OnJoinClick" Text="Confirm" Margin="0, 30" StyleClass="Large, Success"/>
 
             <Label x:Name="Description" StyleClass="Description" Text="* Password should be provided to you by your event organizer"/>

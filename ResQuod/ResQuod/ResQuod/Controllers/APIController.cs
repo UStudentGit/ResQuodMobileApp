@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ResQuod.Controllers
 {
-    class APIController
+    static class APIController
     {
         static HttpClient client = new HttpClient();
         static string token;
@@ -20,14 +20,7 @@ namespace ResQuod.Controllers
 
         public enum Response
         {
-            Success, IncorrectCredentials, BadRequest, InternetConnectionProblem, ServerProblem, UnknowError
-        }
-
-        public APIController()
-        {
-            client = new HttpClient();
-            //client.MaxResponseContentBufferSize = 256000;
-            //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+            Success, IncorrectCredentials, BadRequest, InternetConnectionProblem, ServerProblem, Forbidden, UnknowError
         }
 
         public static async Task<Tuple<Response, string>> Login(LoginModel item)
@@ -109,6 +102,7 @@ namespace ResQuod.Controllers
             return Tuple.Create(Response.UnknowError, error.Message);
         }
 
+        #region UserPanel
         public static async Task<Tuple<Response, string>> Logout()
         {
             // TODO
@@ -194,9 +188,9 @@ namespace ResQuod.Controllers
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.UnknowError, error.Message);
         }
+        #endregion
 
-        /// NFC 
-        /// 
+        #region NFC
         public static async Task<Tuple<Response, string, RoomPosition[]>> GetPositionsWithoutTag()
         {
             //First check internet connection
@@ -315,6 +309,53 @@ namespace ResQuod.Controllers
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.BadRequest, error.Message);
         }
+        #endregion
+
+        #region Events
+        public static async Task<Tuple<Response, string, List<Event>>> GetUserEvents()
+        {
+            var events = new List<Event>();
+            //First check internet connection
+            if (!InternetController.IsInternetActive())
+                return Tuple.Create(Response.InternetConnectionProblem, "You have no internet connection", events);
+
+            var uri = new Uri(string.Format(Constants.API_GetUserEvents, string.Empty));
+
+            //var json = JsonConvert.SerializeObject("");
+            //var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage response = await client.GetAsync(uri);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                return Tuple.Create(Response.ServerProblem, "Server problem", events);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.BadRequest, _error.Message, events);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                var _error = JsonConvert.DeserializeObject<ErrorResponse>(_data);
+                return Tuple.Create(Response.Forbidden, _error.Message, events);
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var _data = await response.Content.ReadAsStringAsync();
+                events = JsonConvert.DeserializeObject<List<Event>>(_data);
+                return Tuple.Create(Response.Success, "Succesfully loaded events", events);
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
+            return Tuple.Create(Response.UnknowError, error.Message, events);
+        }
 
         public static async Task<Tuple<Response, string>> JoinEvent(string password)
         {
@@ -351,5 +392,6 @@ namespace ResQuod.Controllers
             var error = JsonConvert.DeserializeObject<ErrorResponse>(data);
             return Tuple.Create(Response.UnknowError, error.Message);
         }
+        #endregion
     }
 }

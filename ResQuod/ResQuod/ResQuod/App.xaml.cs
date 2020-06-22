@@ -27,13 +27,9 @@ namespace ResQuod
 
                 if (response.Item1 == Response.Success)
                 {
-                    //Stay on main panel page
-                    return;
+                    await Shell.Current.GoToAsync(AppShell.Routes.Home);
                 }
             }
-
-            //Open login panel
-            await Shell.Current.GoToAsync(AppShell.Routes.StartPage);
         }
 
         protected override void OnStart()
